@@ -21,7 +21,7 @@ print( df.columns )
 
 # df_cut_1 = df[ df['Fecha de incorporación al DENUE'] < '2014-12' ]
 # df_cut_2 = df[  (df['Fecha de incorporación al DENUE'] >= '2014-12') &  (df['Fecha de incorporación al DENUE'] < '2019-11') ]
-# df_cut_3 = df[ '2019-11' <= df['Fecha de incorporación al DENUE']   ]
+# df_cut_3 = df[ '2019-11' <= df['Fecha de incorporación al DENUE']]
 
 df_cut_1 = df[ df['Fecha de incorporación al DENUE'] < '2014-12' ]
 df_cut_2 = df[ df['Fecha de incorporación al DENUE'] < '2019-11' ]
