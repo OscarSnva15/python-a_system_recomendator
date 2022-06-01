@@ -38,7 +38,7 @@ df = pd.read_csv("../consultas/crecimientoNicolasRomero.csv")
 
 # print( BBox )
 mymap = plt.imread("../media/map_CDNR.png")
-BBox = ((-99.3686, -99.2670, 19.58, 19.65))
+BBox = ((-99.3097, -99.3186, 19.6410, 19.6462))
 
 near_latitude = []
 near_longitud = []
@@ -76,7 +76,7 @@ ancla = [461110,
 # df_cut_3 = df
 # df_test = df
 
-f = open("tickets.csv", "a")
+f = open("corte_zone_tickets.csv", "a")
 # create the csv writer
 writer = csv.writer(f)
 
