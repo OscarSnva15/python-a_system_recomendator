@@ -14,8 +14,8 @@ pd.set_option('display.max_columns', 75)
 
 data = pd.read_csv('../consultas/corte_zone_tickets.csv', header = None)
 # data.info()
-# print( data.head() )
-# print( data.describe() )
+# print(data.head())
+# print(data.describe())
 
 color = plt.cm.rainbow(np.linspace(0, 1, 40))
 data[0].value_counts().head(40).plot.bar(color = color, figsize=(13,5))
