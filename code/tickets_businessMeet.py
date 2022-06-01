@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from math import dist, radians, cos, sin, asin, sqrt
+import csv
 
 class Business:
     def __init__(self, name, type, clave, age):
@@ -43,32 +44,88 @@ near_latitude = []
 near_longitud = []
 near_bussines = []
 
-for i in df.index:
+
+ancla = [461110,
+465311,
+812110,
+467111,
+311830,
+461121,
+463211,
+461130,
+464111,
+461122,
+811111,
+311812,
+611122,
+461160,
+722514,
+621211,
+813210,
+561432,
+611111,
+463310,
+611112,
+468211,
+722513,
+722518,
+722517]
+
+# df_cut_1 = df[ df['Fecha_de_incorporacion_al_DENUE'] < '2014-12' ]
+# df_cut_2 = df[  (df['Fecha_de_incorporacion_al_DENUE'] < '2019-11') ]
+# df_cut_3 = df
+# df_test = df
+
+f = open("tickets.csv", "a")
+# create the csv writer
+writer = csv.writer(f)
+
+for j in df.index:
+    dict_counter = {}
+    latitude1, longitude1 = df['Latitud'][j], df['Longitud'][j] 
+    for i in df.index:
+    # if df_test['Código_de_la_clase_de_actividad_SCIAN'][i] not in ancla:
+    #     near_latitude.append(df_test['Latitud'][i])
+    #     near_longitud.append(df_test['Longitud'][i])
         if (distance(latitude1, df['Latitud'][i], longitude1, df['Longitud'][i])<=ratio) and (df['Fecha_de_incorporacion_al_DENUE'][i]< date) :
             near_bussines.append(Business(df['Nombre_de_la_Unidad_Económica'][i],df['Nombre_de_clase_de_la_actividad'][i],df['Código_de_la_clase_de_actividad_SCIAN'][i],df['Fecha_de_incorporacion_al_DENUE'][i]))
             near_latitude.append(df['Latitud'][i])
             near_longitud.append(df['Longitud'][i])
+            if df['Código_de_la_clase_de_actividad_SCIAN'][i] in dict_counter:
+                dict_counter[ df['Código_de_la_clase_de_actividad_SCIAN'][i] ] +=1
+            else:
+                dict_counter[ df['Código_de_la_clase_de_actividad_SCIAN'][i] ] = 1
 
+
+    if len(dict_counter)>1:
+        writer.writerow(  list(dict_counter.keys()) )
+        print(" site :", j)
+    
 print("BUSINES SET")
 print("LEN : \n",  len(near_latitude) )
-for j in range(len(near_latitude)):
-    print("-----------------------.")
-    print("Name: ", near_bussines[j].name)
-    print("Type: ", near_bussines[j].type)
-    print("Clave:", near_bussines[j].clave)
-    print("Age:  ", near_bussines[j].age)
+# for j in range(len(near_latitude)):
+#     print("-----------------------.")
+#     print("Name: ", near_bussines[j].name)
+#     print("Type: ", near_bussines[j].type)
+#     print("Clave:", near_bussines[j].clave)
+#     print("Age:  ", near_bussines[j].age)
 
-fig, ax = plt.subplots(figsize = (22,12))
-ax.scatter(near_longitud, near_latitude, zorder=1, alpha= 0.4, c='r', s=10)
-ax.set_title('Plotting Spatial Data on Map')
-ax.set_xlim(BBox[0],BBox[1])
-ax.set_ylim(BBox[2],BBox[3])
-ax.imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
-plt.show()
+# print(" total :", len(dict_counter))
+# for key, value in dict_counter.items():
+#     print( key, " : ", value )
+
+
+# fig, ax = plt.subplots(figsize = (22,12))
+# ax.scatter(near_longitud, near_latitude, zorder=1, alpha= 0.4, c='b', s=10)
+# ax.set_title('Plotting Spatial Data on Map')
+# ax.set_xlim(BBox[0],BBox[1])
+# ax.set_ylim(BBox[2],BBox[3])
+# ax.imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
+# plt.show()
 
 #df_cut_1 = df[ df['Fecha de incorporación al DENUE'] < '2014-12' ]
 # df_cut_2 = df[  (df['Fecha de incorporación al DENUE'] >= '2014-12') &  (df['Fecha de incorporación al DENUE'] < '2019-11') ]
-# df_cut_3 = df[ '2019-11' <= df['Fecha de incorporación al DENUE']]
+# df_cut_3 = df[ '2019-11' <= df['Fecha de incorporación al DENUE']   ]
 
 # df_cut_1 = df[ df['Fecha de incorporación al DENUE'] < '2014-12' ]
 # df_cut_2 = df[ df['Fecha de incorporación al DENUE'] < '2019-11' ]
