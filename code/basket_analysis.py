@@ -41,16 +41,11 @@ plt.grid()
 plt.title('Top 15 First Popular Bussines', fontsize = 20)
 plt.show()
 
-
-#gettin the list of transactions from the dataset
+# Getting the list of transactions from the dataset
 transactions = []
 for i in range(0, len(data)):
-    for j in range(0, len(data.columns)):
-        transactions.append(str(data.values[i,j]))
+    transactions.append([str(data.values[i,j]) for j in range(0, len(data.columns))])
 
-# print(transactions[:len(data.columns)])
-
-# Extract unique items.
 flattened = [item for transactions in transactions for item in transactions]
 items = list(set(flattened))
 

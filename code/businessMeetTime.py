@@ -42,12 +42,15 @@ BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 near_latitude = []
 near_longitud = []
 near_bussines = []
+near_name_bussiness=[]
 
 for i in df.index:
         if (distance(latitude1, df['Latitud'][i], longitude1, df['Longitud'][i])<=ratio) and (df['Fecha_de_incorporacion_al_DENUE'][i]< date) :
             near_bussines.append(Business(df['Nombre_de_la_Unidad_Económica'][i],df['Nombre_de_clase_de_la_actividad'][i],df['Código_de_la_clase_de_actividad_SCIAN'][i],df['Fecha_de_incorporacion_al_DENUE'][i]))
+            
             near_latitude.append(df['Latitud'][i])
             near_longitud.append(df['Longitud'][i])
+            near_name_bussiness.append(df['Nombre_de_la_Unidad_Económica'][i])
 
 print("BUSINES SET")
 print("LEN : \n",  len(near_latitude) )

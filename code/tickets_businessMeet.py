@@ -76,7 +76,7 @@ ancla = [461110,
 # df_cut_3 = df
 # df_test = df
 
-f = open("corte_zone_tickets.csv", "a")
+f = open("tickets_names_negocio.csv", "a")
 # create the csv writer
 writer = csv.writer(f)
 
@@ -102,7 +102,7 @@ for j in df.index:
         print(" site :", j)
     
 print("BUSINES SET")
-print("LEN : \n",  len(near_latitude) )
+print("LEN : \n",  len(near_latitude))
 # for j in range(len(near_latitude)):
 #     print("-----------------------.")
 #     print("Name: ", near_bussines[j].name)
