@@ -135,7 +135,6 @@ print("LEN : \n",  len(near_latitude))
 # print( len(df_cut_2) )
 # print( len(df_cut_3) )
 
-
 # fig, ax = plt.subplots(figsize = (22,12))
 # # ax.scatter(df_cut_1.Longitud, df_cut_1.Latitud, zorder=1, alpha= 0.4, c='gray', s=10)
 # # ax.scatter(df_cut_2.Longitud, df_cut_2.Latitud, zorder=1, alpha= 0.4, c='gray', s=10)
