@@ -82,7 +82,7 @@ def main():
   code_business = []
   plot_scatter_bussines_acumulated(df, BBox, mymap, 461110)
   plt.show()
-  
+
 
 if __name__ == "__main__":
   main()
