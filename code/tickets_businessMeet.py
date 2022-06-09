@@ -34,7 +34,7 @@ def distance(lat1, lat2, lon1, lon2):
         # calculate the result
         return(c * r)
 
-df = pd.read_csv("../consultas/crecimientoNicolasRomero.csv")
+df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
 
 # print( BBox )
 mymap = plt.imread("../media/map_CDNR.png")
@@ -76,7 +76,7 @@ ancla = [461110,
 # df_cut_3 = df
 # df_test = df
 
-f = open("tickets_names_negocio.csv", "a")
+f = open("borrar.csv", "a")
 # create the csv writer
 writer = csv.writer(f)
 
