@@ -5,16 +5,9 @@ import matplotlib.pyplot as plt
 from math import dist, radians, cos, sin, asin, sqrt
 import os
 
-class Business:
-    def __init__(self, name, type, clave, age):
-        self.name = name
-        self.type = type
-        self.clave = clave
-        self.age = age
-        
 #origing section of interesting
 latitude1, longitude1 = [19.625136480047, -99.32603846979681]
-ratio=0.100
+ratio=0.500
 date= '2014-12'
 code_meet = 461110
 
@@ -55,7 +48,7 @@ def plot_scatter_bussines_partition( df, BBox, mymap, code = 461110 ):
     ax[i].imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
     ax[i].scatter(df_filter_class_snaptime[i]['Longitud'], df_filter_class_snaptime[i]['Latitud'], zorder=1, alpha= 0.71, c=color[i], s=10)
 
-def plot_scatter_bussines_acumulated( df, BBox, mymap, code = 311812 ):
+def plot_scatter_bussines_acumulated( df, BBox, mymap, code):
   df_filter_class = df[ df['Código_de_la_clase_de_actividad_SCIAN'] ==  code]
   df_filter_class_snaptime = []
   df_filter_class_snaptime.append( df_filter_class[ df_filter_class['Fecha_de_incorporacion_al_DENUE'] < '2014-12' ] )
@@ -73,7 +66,8 @@ def plot_scatter_bussines_acumulated( df, BBox, mymap, code = 311812 ):
     ax[i].set_ylim(BBox[2],BBox[3])
     ax[i].imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
     for j in range(i+1):
-      ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=color[j], s=10)
+      if (distance(latitude1, df_filter_class_snaptime[j]['Latitud'], longitude1, df_filter_class_snaptime[j]['Longitud'])<=ratio):
+        ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=color[j], s=10)
   
   plt.savefig('../images_insights/'+str(code)+'.png')
 
@@ -81,16 +75,7 @@ def main():
   df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
   mymap = plt.imread("../media/map_CDNR.png")
   BBox = ((-99.3686, -99.2670, 19.58, 19.65))
-  #add: code here to plot business in snapshop of time
-  near_bussines = []
-  near_code_business = []
-
-  for i in df.index:
-        if (distance(latitude1, df['Latitud'][i], longitude1, df['Longitud'][i])<=ratio) and (df['Código_de_la_clase_de_actividad_SCIAN'][i]== code_meet):
-              near_code_business.append(df['Código_de_la_clase_de_actividad_SCIAN'][i])
-              near_bussines.append(df['Código_de_la_clase_de_actividad_SCIAN'][i])
-  for j in range(len(near_code_business)):
-    plot_scatter_bussines_acumulated(df, BBox, mymap, near_bussines)
+  plot_scatter_bussines_acumulated(df, BBox, mymap, 461110)
   plt.show()
 
 if __name__ == "__main__":
