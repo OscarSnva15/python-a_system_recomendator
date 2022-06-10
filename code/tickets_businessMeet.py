@@ -96,7 +96,6 @@ for j in df.index:
             else:
                 dict_counter[ df['Código_de_la_clase_de_actividad_SCIAN'][i] ] = 1
 
-
     if len(dict_counter)>1:
         writer.writerow(  list(dict_counter.keys()) )
         print(" site :", j)
