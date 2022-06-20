@@ -33,7 +33,7 @@ def distance(lat1, lat2, lon1, lon2):
         return(c * r)
 
 
-def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311812, target_location=[19.599472210151948, -99.30688849000485]):
+def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311520, target_location=[19.599472210151948, -99.30688849000485]):
 
     # Filter data by CODE
     df_filter_class = df[ df['Código_de_la_clase_de_actividad_SCIAN'] ==  code]
@@ -72,7 +72,7 @@ def main():
     mymap = plt.imread("../media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
     target_location = [19.599472210151948, -99.30688849000485]
-    plot_scatter_bussines_acumulated( df, BBox, mymap, 461110, target_location )
+    plot_scatter_bussines_acumulated( df, BBox, mymap, 311520, target_location )
     plt.show()
 
 if __name__ == "__main__":
