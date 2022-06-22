@@ -30,10 +30,12 @@ def distance(lat1, lat2, lon1, lon2):
         r = 6371
         return(c * r)
 
-def plot_scatter_bussines_acumulated(df, BBox, mymap, code):
+def plot_scatter_bussines_acumulated(df, BBox, mymap, codeList):
     df_filters = pd.DataFrame(columns=['Nombre_de_la_Unidad_Económica','Código_de_la_clase_de_actividad_SCIAN','Área_geoestadística_básica','Latitud','Longitud','Fecha_de_incorporacion_al_DENUE'])
     
-    print(df_filters.head)
+    for code in codeList:
+        df_filter = df_filters['Código_de_la_clase_de_actividad_SCIAN'][code] == code
+        
     for i in range(len(df)):
         # print(df.loc[i,"ID"],df.loc[i,"Nombre_de_la_Unidad_Económica"],df.loc[i,"Código_de_la_clase_de_actividad_SCIAN"],df.loc[i,"Área_geoestadística_básica"],df.loc[i,"Latitud"],df.loc[i,"Longitud"],df.loc[i,"Fecha_de_incorporacion_al_DENUE"])
         if(distance(latitude1, df.loc[i,"Latitud"], longitude1, df.loc[i,"Longitud"] ) < 0.250 ):
@@ -57,8 +59,8 @@ def main():
     df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
     mymap = plt.imread("../media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
-    target_location = [19.599472210151948, -99.30688849000485]
-    plot_scatter_bussines_acumulated( df, BBox, mymap, 461110)
+    class_one = [461110, 465311,311830, 467111, 461122, 311812]
+    plot_scatter_bussines_acumulated( df, BBox, mymap, class_one)
     plt.show()
 
 if __name__ == "__main__":

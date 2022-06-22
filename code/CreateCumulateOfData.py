@@ -49,11 +49,10 @@ def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311812):
         ax[i].imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
         for j in range(i+1):
             ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=color[j], s=10)
-
     plt.savefig('../images_insights/'+str(code)+'.png')
     
     # for j in range(i+1):
-    #     ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=color[j], s=10)
+    # ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=color[j], s=10)
     # plt.savefig('../images_insights/'+str(code)+'.png')
 
 def main():
