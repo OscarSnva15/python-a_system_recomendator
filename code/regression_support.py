@@ -54,7 +54,7 @@ def plot_scatter_bussines_acumulated(df, code = 312112):
         for i, row in df.iterrows():
             if abs( (row['Latitud'] - lat) ) < delta and  abs( (row['Longitud'] - long) ) < delta:
                 # bussines_class[ row['Código_de_la_clase_de_actividad_SCIAN'] ] +=  1 
-                all_class.add( row['Código_de_la_clase_de_actividad_SCIAN'] )
+                all_class.add(row['Código_de_la_clase_de_actividad_SCIAN'])
 
         # print( row_filter['Nombre_de_la_Unidad_Económica'],  list(bussines_class.values()))
         # print( list(bussines_class.keys()))
