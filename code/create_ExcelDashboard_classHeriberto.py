@@ -28,13 +28,15 @@ def distance(lat1, lat2, lon1, lon2):
         # calculate the result
         return(c * r)
 
+
+
 @dataclass
 class data_business_filter:
     code_bussines : int
     epoch : int
     filter_bussines : pd.DataFrame
     df_complete : pd.DataFrame
-    bussines_neighborhood_acc : dict
+    bussines_neighborhood_acc : dict 
     influence_radio : float
     influence_radio_2 : float
     intradistances_target_bussines : pd.DataFrame
@@ -66,7 +68,7 @@ class data_business_filter:
         elif self.epoch == 2:
             # filtered =  df_filter_general[ df_filter_general['Fecha_de_incorporacion_al_DENUE'] >= '2019-11' ]
             filtered =  df_filter_general
-        else:
+        else: 
             filtered = df_filter_general
 
         print( "epoch ", self.epoch, "  TOTAL CODE-BUSSINESS FOUND: ",len(filtered) )
@@ -102,7 +104,7 @@ class data_business_filter:
     def __get_bussines_neighborhood_acc(self):
         #obtain the dataframe that have data abouth rangeAverage and dataframe class business
         self.intradistances_target_bussines = self.__get_average_distance_for_BussinesCode()
-
+        
         self.influence_radio_2 = float(self.intradistances_target_bussines.mode().mean()) / 2
         self.influence_radio = float(self.intradistances_target_bussines.mean()) / 2
 
@@ -120,7 +122,7 @@ class data_business_filter:
         list_distances = []
         #The one business by step to comparate with all them data
         for _, base in self.filter_bussines.iterrows():
-            array = []
+            array = [] 
 
             #The all business to comparate with the step data
             for _, row in self.filter_bussines.iterrows():
@@ -146,11 +148,8 @@ class data_business_filter:
     def report_accumulated_bussines_support(self):
         Latitud = []
         Longitud = []
-        posicion = 0
-        dfExcel = pd.DataFrame(columns = ['snapTime','nameBussines','311520','311812','311830','311910','312112','321910','323119','332320','337120','434112','434211','434311','461110','461121','461122','461130','461140','461150','461160','461170','461190','461213','462112','463113','463211','463213','463215','463310','464111','464112','464113','465111','465211','465311','465912','466111','466212','466312','466410','467111','467113','467114','467115','468112','468211','468420','531113','532282','541110','541920','541941','561432','611111','611112','611621','621111','621211','621398','621511','713120','713943','722412','722511','722512','722513','722514','722515','722517','722518','722519','811111','811112','811119','811121','811191','811192','811211','811219','811410','811420','811430','811492','811499','812110','812130','812210','812410','813210','813230','931610'], index=range(12))
-        list_codes = [468412]
-        
-        for i, base in self.filter_bussines.iterrows():
+        print( "self.influence_radio :::: ",self.influence_radio)
+        for _, base in self.filter_bussines.iterrows():
             types_code = self.bussines_neighborhood_acc.copy()
             for _, iter in self.df_complete.iterrows():
                 if iter['Código_de_la_clase_de_actividad_SCIAN'] in types_code.keys():
@@ -159,42 +158,17 @@ class data_business_filter:
                     # if abs((iter['Latitud'] - base['Latitud'])) < self.influence_radio  and \
                     #     abs((iter['Longitud']-base['Longitud'])) < self.influence_radio:
                     if sqrt(dlat**2 + dlong**2) < self.influence_radio:
-                            types_code[iter['Código_de_la_clase_de_actividad_SCIAN']] +=  1
+                            types_code[iter['Código_de_la_clase_de_actividad_SCIAN']] +=  1 
                             Latitud.append(iter['Latitud'])
                             Longitud.append(iter['Longitud'])
-                
+
             code = list(types_code.values())
-            print(base['Nombre_de_la_Unidad_Económica'],', ', ', '.join(map(str,code)))
-            dfExcel.iloc[posicion]=(str(self.epoch), str(base['Nombre_de_la_Unidad_Económica']), str(code[0]), str(code[1]), str(code[2]),str(code[3]),str(code[4]),str(code[5]),str(code[6]),str(code[7]),str(code[8]),str(code[9]),str(code[10]),str(code[11]),str(code[12]),str(code[13]),str(code[14]),str(code[15]),str(code[16]),str(code[17]),str(code[18]),str(code[19]),str(code[20]),str(code[21]),str(code[22]),str(code[23]),str(code[24]),str(code[25]),str(code[26]),str(code[27]),str(code[28]),str(code[29]),str(code[30]),str(code[31]),str(code[32]),str(code[33]),str(code[34]),str(code[35]),str(code[36]),str(code[37]),str(code[38]),str(code[39]),str(code[40]),str(code[41]),str(code[42]),str(code[43]),str(code[44]),str(code[45]),str(code[46]),str(code[47]),str(code[48]),str(code[49]),str(code[50]),str(code[51]),str(code[52]),str(code[53]),str(code[54]),str(code[55]),str(code[56]),str(code[57]),str(code[58]),str(code[59]),str(code[60]),str(code[61]),str(code[62]),str(code[63]),str(code[64]),str(code[65]),str(code[66]),str(code[67]),str(code[68]),str(code[69]),str(code[70]),str(code[71]),str(code[72]),str(code[73]),str(code[74]),str(code[75]),str(code[76]),str(code[77]),str(code[78]),str(code[79]),str(code[80]),str(code[81]),str(code[82]),str(code[83]),str(code[84]),str(code[85]),str(code[86]),str(code[87]),str(code[88]),str(code[89]))
-            posicion = posicion + 1
-        
-        averageList = []
-        ListColumns  = []
-        #add code only problabilyty
-        ListColumns = dfExcel.columns
-        for x in ListColumns:
-            if x != 'snapTime' and x !='nameBussines':
-                averageList.append(dfExcel[x].mean())
+            print("\n", base['Nombre_de_la_Unidad_Económica'],', ', ', '.join(map(str,code)) )
 
-        self.cutoff = sum(averageList[3::])/len(averageList[3::])
-        self.desc_bussines = self.filter_bussines.iloc[0]["Nombre_de_clase_de_la_actividad"]
+        self.plot_escenary(Latitud, Longitud)
 
-        # VCDL = [ 10 if x > self.cutoff*0.75 else 0 for x in averageList ]
-        VCDL = averageList
-        VCDL.insert(0,self.code_bussines)
-        VCDL.insert(1,self.filter_bussines.iloc[0]["Nombre_de_clase_de_la_actividad"])
+        return
 
-        # averageList.insert(0,"")
-        # averageList.insert(1,"Promedio")
-        # dfExcel.loc[len(dfExcel)] = averageList
-        
-        # writer = pd.ExcelWriter('../querys/dataExceLCreated/pruebaUno.xlsx', engine='xlsxwriter')
-        # dfExcel.to_excel(writer, sheet_name='sheet1', index = True)
-        # writer.save()
-
-        # self.plot_escenary(Latitud, Longitud)
-
-        return VCDL
 
 
 def get_productExcel():
@@ -275,9 +249,9 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, code_list ):
         plt.clf()
 
 def main():
-    code= 468420
+    code= 312112
     Latitud, Longitud = [19.62054709688509, -99.31394730905744]
-    time_window = 0
+    time_window = 2
     # ratio = 0.000250
     df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
 
@@ -286,13 +260,13 @@ def main():
 
     bussines_snapshot =  data_business_filter( df, code, time_window)
     print( "bussines_snapshot.influence_radio : ", bussines_snapshot.influence_radio )
-    print( "radio KM: ",distance(0,bussines_snapshot.influence_radio ,0,0) )
+    print( "radio KM: ",distance(0,bussines_snapshot.influence_radio ,0,0) ) 
     print( "total bussines in radio: ", len(bussines_snapshot.bussines_neighborhood_acc) )
-    print( "0.00099 to KM: ",distance(0,0.00099 ,0,0) )
+    print( "0.00099 to KM: ",distance(0,0.00099 ,0,0) ) 
 
     bussines_snapshot.report_accumulated_bussines_support()
 
-
+    
 
     # code_list = [461110, 465311, 311830, 467111, 461122, 311812 ]
     # get_setBusinessClass(df,code,time_window)

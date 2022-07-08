@@ -4,12 +4,14 @@ from codecs import latin_1_encode
 from csv import writer
 from dataclasses import dataclass
 from math import dist, radians, cos, sin, asin, sqrt
+from pickle import LIST
 from unittest.util import three_way_cmp
 import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import cm
 import numpy as np
 from dataclasses import dataclass
+
 
 def distance(lat1, lat2, lon1, lon2):
         # The math module contains a function named
@@ -28,9 +30,10 @@ def distance(lat1, lat2, lon1, lon2):
         # calculate the result
         return(c * r)
 
-@dataclass
+@dataclass 
 class data_business_filter:
     code_bussines : int
+    desc_bussines : str
     epoch : int
     filter_bussines : pd.DataFrame
     df_complete : pd.DataFrame
@@ -40,6 +43,7 @@ class data_business_filter:
     intradistances_target_bussines : pd.DataFrame
     accumulated_neighborhood_bussines : dict
     code_poles : set
+    cutoff : float
 
     def __init__(self, df, code_bussines, epoch ):
         self.code_bussines = code_bussines
@@ -49,7 +53,9 @@ class data_business_filter:
         self.bussines_neighborhood_acc = self.__get_bussines_neighborhood_acc()
 
     def __set_code_poles(self):
-            self.code_poles = ( 311520, 311812, 311830, 311910, 312112, 321910, 323119, 332320, 337120, 434112, 434211, 434311, 461110, 461121, 461122, 461130, 461140, 461150, 461160, 461170, 461190, 461213, 462112, 463113, 463211, 463213, 463215, 463310, 464111, 464112, 464113, 465111, 465211, 465311, 465912, 466111, 466212, 466312, 466410, 467111, 467113, 467114, 467115, 468112, 468211, 468420, 531113, 532282, 541110, 541920, 541941, 561432, 611111, 611112, 611621, 621111, 621211, 621398, 621511, 713120, 713943, 722412, 722511, 722512, 722513, 722514, 722515, 722517, 722518, 722519, 811111, 811112, 811119, 811121, 811191, 811192, 811211, 811219, 811410, 811420, 811430, 811492, 811499, 812110, 812130, 812210, 812410, 813210, 813230, 931610)
+            # self.code_poles = ( 311520, 311812, 311830, 311910, 312112, 321910, 323119, 332320, 337120, 434112, 434211, 434311, 461110, 461121, 461122, 461130, 461140, 461150, 461160, 461170, 461190, 461213, 462112, 463113, 463211, 463213, 463215, 463310, 464111, 464112, 464113, 465111, 465211, 465311, 465912, 466111, 466212, 466312, 466410, 467111, 467113, 467114, 467115, 468112, 468211, 468420, 531113, 532282, 541110, 541920, 541941, 561432, 611111, 611112, 611621, 621111, 621211, 621398, 621511, 713120, 713943, 722412, 722511, 722512, 722513, 722514, 722515, 722517, 722518, 722519, 811111, 811112, 811119, 811121, 811191, 811192, 811211, 811219, 811410, 811420, 811430, 811492, 811499, 812110, 812130, 812210, 812410, 813210, 813230, 931610)
+            # sort by preponderance
+            self.code_poles = (461110, 465311, 812110, 463211, 722513, 461122, 461160, 722514, 461130, 311812, 467111, 311830, 722517, 467115, 561432, 722518, 464111, 461121, 811111, 722519, 722515, 621211, 332320, 461190, 465912, 466410, 713120, 531113, 811121, 813210, 468211, 461150, 811191, 463310, 713943, 321910, 465111, 722511, 467114, 466312, 611111, 812210, 621111, 461170, 811192, 811112, 461140, 312112, 465211, 811499, 811430, 466212, 461213, 811410, 464113, 722412, 466111, 434211, 434311, 611112, 434112, 463113, 462112, 464112, 811119, 463215, 811211, 541920, 541110, 323119, 467113, 811492, 337120, 812410, 463213, 813230, 931610, 468112, 811219, 811420, 541941, 311520, 722512, 621398, 311910, 812130, 621511, 532282, 611621, 468420)
 
     def __filter_by_code(self):
         #snaptime overview data
@@ -69,7 +75,7 @@ class data_business_filter:
         else:
             filtered = df_filter_general
 
-        print( "epoch ", self.epoch, "  TOTAL CODE-BUSSINESS FOUND: ",len(filtered) )
+        print( "epoch", self.epoch, "  TOTAL CODE-BUSSINESS FOUND: ",len(filtered) )
 
         return filtered
 
@@ -82,7 +88,7 @@ class data_business_filter:
 
         x_values = [(BBox[0]+BBox[1])/2, (BBox[0]+BBox[1])/2 + self.influence_radio]
         y_values = [(BBox[3]+BBox[2])/2, (BBox[3]+BBox[2])/2  ]
-        ax.plot(x_values, y_values, c='b' )
+        ax.plot(x_values, y_values, c='b')
 
         x_values = [(BBox[0]+BBox[1])/2, (BBox[0]+BBox[1])/2 ]
         y_values = [(BBox[3]+BBox[2])/2, (BBox[3]+BBox[2])/2 + + self.influence_radio_2 ]
@@ -107,7 +113,7 @@ class data_business_filter:
         self.influence_radio = float(self.intradistances_target_bussines.mean()) / 2
 
         print("self.influence_radio mode mean: ", self.influence_radio_2)
-        print("self.influence_radio mean: ", self.influence_radio)
+        print("self.influence_radio mean*: ", self.influence_radio)
 
         self.__set_code_poles()
         types_code = {}
@@ -144,12 +150,14 @@ class data_business_filter:
         return  df_distances
 
     def report_accumulated_bussines_support(self):
+
+        # dfExcel = pd.DataFrame(columns = ['snapTime','nameBussines','311520','311812','311830','311910','312112','321910','323119','332320','337120','434112','434211','434311','461110','461121','461122','461130','461140','461150','461160','461170','461190','461213','462112','463113','463211','463213','463215','463310','464111','464112','464113','465111','465211','465311','465912','466111','466212','466312','466410','467111','467113','467114','467115','468112','468211','468420','531113','532282','541110','541920','541941','561432','611111','611112','611621','621111','621211','621398','621511','713120','713943','722412','722511','722512','722513','722514','722515','722517','722518','722519','811111','811112','811119','811121','811191','811192','811211','811219','811410','811420','811430','811492','811499','812110','812130','812210','812410','813210','813230','931610'], index=range(12))
+        dfExcel = pd.DataFrame(columns = ['snapTime','nameBussines', '461110', '465311', '812110', '463211', '722513', '461122', '461160', '722514', '461130', '311812', '467111', '311830', '722517', '467115', '561432', '722518', '464111', '461121', '811111', '722519', '722515', '621211', '332320', '461190', '465912', '466410', '713120', '531113', '811121', '813210', '468211', '461150', '811191', '463310', '713943', '321910', '465111', '722511', '467114', '466312', '611111', '812210', '621111', '461170', '811192', '811112', '461140', '312112', '465211', '811499', '811430', '466212', '461213', '811410', '464113', '722412', '466111', '434211', '434311', '611112', '434112', '463113', '462112', '464112', '811119', '463215', '811211', '541920', '541110', '323119', '467113', '811492', '337120', '812410', '463213', '813230', '931610', '468112', '811219', '811420', '541941', '311520', '722512', '621398', '311910', '812130', '621511', '532282', '611621', '468420' ], index=range(len(self.filter_bussines)))
+
         Latitud = []
         Longitud = []
         posicion = 0
-        dfExcel = pd.DataFrame(columns = ['snapTime','nameBussines','311520','311812','311830','311910','312112','321910','323119','332320','337120','434112','434211','434311','461110','461121','461122','461130','461140','461150','461160','461170','461190','461213','462112','463113','463211','463213','463215','463310','464111','464112','464113','465111','465211','465311','465912','466111','466212','466312','466410','467111','467113','467114','467115','468112','468211','468420','531113','532282','541110','541920','541941','561432','611111','611112','611621','621111','621211','621398','621511','713120','713943','722412','722511','722512','722513','722514','722515','722517','722518','722519','811111','811112','811119','811121','811191','811192','811211','811219','811410','811420','811430','811492','811499','812110','812130','812210','812410','813210','813230','931610'], index=range(12))
-        list_codes = [468412]
-        
+        print( "self.influence_radio :::: ",self.influence_radio)
         for i, base in self.filter_bussines.iterrows():
             types_code = self.bussines_neighborhood_acc.copy()
             for _, iter in self.df_complete.iterrows():
@@ -162,15 +170,17 @@ class data_business_filter:
                             types_code[iter['Código_de_la_clase_de_actividad_SCIAN']] +=  1
                             Latitud.append(iter['Latitud'])
                             Longitud.append(iter['Longitud'])
-                
+
             code = list(types_code.values())
             print(base['Nombre_de_la_Unidad_Económica'],', ', ', '.join(map(str,code)))
-            dfExcel.iloc[posicion]=(str(self.epoch), str(base['Nombre_de_la_Unidad_Económica']), str(code[0]), str(code[1]), str(code[2]),str(code[3]),str(code[4]),str(code[5]),str(code[6]),str(code[7]),str(code[8]),str(code[9]),str(code[10]),str(code[11]),str(code[12]),str(code[13]),str(code[14]),str(code[15]),str(code[16]),str(code[17]),str(code[18]),str(code[19]),str(code[20]),str(code[21]),str(code[22]),str(code[23]),str(code[24]),str(code[25]),str(code[26]),str(code[27]),str(code[28]),str(code[29]),str(code[30]),str(code[31]),str(code[32]),str(code[33]),str(code[34]),str(code[35]),str(code[36]),str(code[37]),str(code[38]),str(code[39]),str(code[40]),str(code[41]),str(code[42]),str(code[43]),str(code[44]),str(code[45]),str(code[46]),str(code[47]),str(code[48]),str(code[49]),str(code[50]),str(code[51]),str(code[52]),str(code[53]),str(code[54]),str(code[55]),str(code[56]),str(code[57]),str(code[58]),str(code[59]),str(code[60]),str(code[61]),str(code[62]),str(code[63]),str(code[64]),str(code[65]),str(code[66]),str(code[67]),str(code[68]),str(code[69]),str(code[70]),str(code[71]),str(code[72]),str(code[73]),str(code[74]),str(code[75]),str(code[76]),str(code[77]),str(code[78]),str(code[79]),str(code[80]),str(code[81]),str(code[82]),str(code[83]),str(code[84]),str(code[85]),str(code[86]),str(code[87]),str(code[88]),str(code[89]))
+            temp = [ self.epoch, str(base['Nombre_de_la_Unidad_Económica']) ]
+            temp.extend( code )
+            dfExcel.iloc[posicion] = tuple( temp )
             posicion = posicion + 1
         
         averageList = []
         ListColumns  = []
-        #add code only problabilyty
+        #we obtain average for each columns
         ListColumns = dfExcel.columns
         for x in ListColumns:
             if x != 'snapTime' and x !='nameBussines':
@@ -197,13 +207,27 @@ class data_business_filter:
         return VCDL
 
 
-def get_productExcel():
-    writer = pd.ExcelWriter('demo.xlsx', engine='xlsxwriter')
+def generate_descriptors_for_business( ):
+    time_window = 2
     df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
-    # Create a Pandas Excel writer using XlsxWriter as the engine.
-    writer = pd.ExcelWriter('demo.xlsx', engine='xlsxwriter')
-    writer.save()
-    return
+
+    list_codes = [461110, 465311, 812110, 463211, 722513, 461122, 461160, 722514, 461130, 311812, 467111, 311830, 722517, 467115, 561432, 722518, 464111, 461121, 811111, 722519, 722515, 621211, 332320, 461190, 465912, 466410, 713120, 531113, 811121, 813210, 468211, 461150, 811191, 463310, 713943, 321910, 465111, 722511, 467114, 466312, 611111, 812210, 621111, 461170, 811192, 811112, 461140, 312112, 465211, 811499, 811430, 466212, 461213, 811410, 464113, 722412, 466111, 434211, 434311, 611112, 434112, 463113, 462112, 464112, 811119, 463215, 811211, 541920, 541110, 323119, 467113, 811492, 337120, 812410, 463213, 813230, 931610, 468112, 811219, 811420, 541941, 311520, 722512, 621398, 311910, 812130, 621511, 532282, 611621, 468420, 811491, 465914, 466114, 465212, 812990, 464121, 811493, 463212, 811312, 461212, 811199, 465215, 811115, 812310, 465911, 621311, 468311, 332710, 624191, 465915, 621331, 315225, 434314, 327330, 611122, 621320, 468412, 541211, 463216, 461211, 931210, 315223, 811114, 434312, 465313, 112512, 611611, 522452, 811129, 465112, 434224, 434319, 339999, 468213, 611691, 621113, 466319, 624411, 811116, 713991, 434221, 465919, 466112, 611121, 611182, 434225, 467112, 532281, 463112, 466211, 435319, 314991, 434229, 315229, 722516, 463217, 611511, 463214, 532411, 713998, 221312, 931410, 466311, 621341, 332310, 532493, 721113, 811113, 221311, 238210, 463111, 337110, 611171, 461123, 611132, 434219, 337210, 435313, 465913, 561431, 321920, 541430, 468413, 468419, 624199, 463218, 541890, 332810, 611172, 621115, 812322]
+    list_codes.reverse()
+    dfExcel_VDC = pd.DataFrame(columns = ['CODE','DESC', '461110', '465311', '812110', '463211', '722513', '461122', '461160', '722514', '461130', '311812', '467111', '311830', '722517', '467115', '561432', '722518', '464111', '461121', '811111', '722519', '722515', '621211', '332320', '461190', '465912', '466410', '713120', '531113', '811121', '813210', '468211', '461150', '811191', '463310', '713943', '321910', '465111', '722511', '467114', '466312', '611111', '812210', '621111', '461170', '811192', '811112', '461140', '312112', '465211', '811499', '811430', '466212', '461213', '811410', '464113', '722412', '466111', '434211', '434311', '611112', '434112', '463113', '462112', '464112', '811119', '463215', '811211', '541920', '541110', '323119', '467113', '811492', '337120', '812410', '463213', '813230', '931610', '468112', '811219', '811420', '541941', '311520', '722512', '621398', '311910', '812130', '621511', '532282', '611621', '468420' ])
+    list_distances = []
+
+    for code in list_codes:
+        print(" working with code: ", code)
+        bussines_snapshot =  __get_average_distance_for_BussinesCode( df, code, time_window)
+        
+        VCDL = bussines_snapshot.report_accumulated_bussines_support()
+        print(VCDL)
+        dfExcel_VDC.loc[len(dfExcel_VDC)] = VCDL
+        writer_test = pd.ExcelWriter('../querys/dataExceLCreated/descriptors_VCDL.xlsx', engine='xlsxwriter')
+        dfExcel_VDC.to_excel(writer_test, sheet_name='sheet1', index = True)
+        writer_test.save()
+
+
 
 def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311812, target_location=[19.599472210151948, -99.30688849000485]):
 
@@ -270,44 +294,26 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, code_list ):
             ax[i].imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
             for j in range(i+1):
                 ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=c, s=10)
-
         plt.savefig('../images_insights/test/' + "{:03d}".format(rank) + '_' + str(code)+'.png')
         plt.clf()
 
 def main():
-    code= 468420
+    code = 312112 #312112
     Latitud, Longitud = [19.62054709688509, -99.31394730905744]
     time_window = 0
     # ratio = 0.000250
     df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
 
-    mymap = plt.imread("../media/map_CDNR.png")
-    BBox = ((-99.3686, -99.2670, 19.58, 19.65))
-
     bussines_snapshot =  data_business_filter( df, code, time_window)
     print( "bussines_snapshot.influence_radio : ", bussines_snapshot.influence_radio )
     print( "radio KM: ",distance(0,bussines_snapshot.influence_radio ,0,0) )
-    print( "total bussines in radio: ", len(bussines_snapshot.bussines_neighborhood_acc) )
-    print( "0.00099 to KM: ",distance(0,0.00099 ,0,0) )
 
-    bussines_snapshot.report_accumulated_bussines_support()
-
-
-
-    # code_list = [461110, 465311, 311830, 467111, 461122, 311812 ]
-    # get_setBusinessClass(df,code,time_window)
-    # get_averageDistanceClass(df,code,time_window)
-    #Firts apply filter class snaptimes on typeClass
-    #print("average distance: \n ",get_averageDistanceClass(df,code,time_window))
-    #plot_scatter_bussines_by_code(df, BBox, mymap, code_list)
-    # get_scaterPlotBusinessClass(df,code,time_window)
-
-    # get_productExcel()
+    # bussines_snapshot.report_accumulated_bussines_support()
+    generate_descriptors_for_business()
     return
 
 if __name__ == "__main__":
     main()
-
     # class_1 = [ 461110, 465311, 311830, 467111, 461122, 311812 ]
     # class_2 = [ 812110, 461121, 461130, 811111, 468211, 811191, 312112, 811492, 221312, 485111,464111 ]
     # class_3 = [ 463211,463113,531113,713120,811410,722519,311520,811499,811211,461213,812910,431150,561431,465913,517311,522460,435419,813120]

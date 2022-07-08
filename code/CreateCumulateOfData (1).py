@@ -42,7 +42,7 @@ def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311812, target_loca
     df_filter_class_snaptime.append( df_filter_class[ df_filter_class['Fecha_de_incorporacion_al_DENUE']>= '2019-11' ] )
 
     color = [ 'r', 'g', 'b' ]
-    title = ["Fecha Nacimiento < 2014-12", "Fecha Nacimiento < 2019-11","Fecha Nacimiento< 2022-05" ]
+    title = ["Fecha Nacimiento < 2014-12", "Fecha Nacimiento < 2019-11","Fecha Nacimiento< 2022-05"]
 
     fig, ax = plt.subplots(nrows = 1, ncols= 3, figsize = (26,10))
 

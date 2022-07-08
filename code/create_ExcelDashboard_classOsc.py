@@ -252,7 +252,8 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, code_list ):
         plt.clf()
 
 def main():
-    code= 811192
+    #code list from 50 average
+    codeList= 811192
     Latitud, Longitud = [19.62054709688509, -99.31394730905744]
     time_window = 0
     # ratio = 0.000250

@@ -51,7 +51,7 @@ def ratio_bettwen_OneTypeBussiness(df,code,time_window=0):
         for _, row in df.iterrows():
             if abs((row['Latitud'] - lat) ) < ratio and  abs((row['Longitud'] - long)) < ratio:
                 types_code[ row['Código_de_la_clase_de_actividad_SCIAN']] +=  1 
-                # all_class.add( row['Código_de_la_clase_de_actividad_SCIAN'] )
+                # all_class.add( row['Código_de_la_clase_de_actividad_SCIAN'])
         print( row_filter['Nombre_de_la_Unidad_Económica'],  list(types_code.values()))
 
 def average_distance(df,type_code):

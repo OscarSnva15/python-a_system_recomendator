@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 from matplotlib.pyplot import cm
 import numpy as np
 
-def get_distance(lat1, lat2, lon1, lon2):
+def getDistances(lat1, lat2, lon1, lon2):
     lon1 = radians(lon1)
     lon2 = radians(lon2)
     lat1 = radians(lat1)
@@ -63,7 +63,7 @@ def get_bussinesNeighbours(df,code,time_window):
     #we start iter data how an tuples Inner Join 
     for _, pibot in df_setBusinesClass.iterrows():
         for _, iter in df.iterrows():
-            if (get_distance(pibot['Latitud'], iter['Latitud'] , pibot['Longitud'], iter["Longitud"]) <= ratioAverage) and (iter['Código_de_la_clase_de_actividad_SCIAN']!= code):
+            if (getDistances(pibot['Latitud'], iter['Latitud'] , pibot['Longitud'], iter["Longitud"]) <= ratioAverage) and (iter['Código_de_la_clase_de_actividad_SCIAN']!= code):
                 all_class.add(iter['Código_de_la_clase_de_actividad_SCIAN'])
     all_class = sorted( all_class )
     print("Neighbours meet of Type Class "+str(code)+ " are: ", all_class)
@@ -126,7 +126,7 @@ def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311812, target_loca
     for snapshot_time in df_filter_class_snaptime:
         df_filter_location_code = pd.DataFrame()
         # Filter data by NEIGHBORHOOD
-        df_filter_class_location.append( snapshot_time[ snapshot_time.apply(lambda x: get_distance(x['Latitud'], latit, x['Longitud'], longit) < 0.250, axis=1) ]   )
+        df_filter_class_location.append( snapshot_time[ snapshot_time.apply(lambda x: getDistances(x['Latitud'], latit, x['Longitud'], longit) < 0.250, axis=1) ]   )
 
     for i in range(3):
         ax[i].set_title(title[i])
