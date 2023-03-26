@@ -259,9 +259,9 @@ def main():
     Latitud, Longitud = [19.62054709688509, -99.31394730905744]
     time_window = 0
     # ratio = 0.000250
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
 
-    mymap = plt.imread("../media/map_CDNR.png")
+    mymap = plt.imread("./media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 
     bussines_snapshot =  data_business_filter( df, Listcode, time_window)
