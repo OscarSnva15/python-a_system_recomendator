@@ -44,9 +44,7 @@ def plot_scatter_bussines_partition( df, BBox, mymap, code = 311812 ):
     ax[i].set_ylim(BBox[2],BBox[3])
     ax[i].imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
     ax[i].scatter(df_filter_class_snaptime[i]['Longitud'], df_filter_class_snaptime[i]['Latitud'], zorder=1, alpha= 0.71, c=color[i], s=10)
-    
 
-  
 
 def plot_scatter_bussines_acumulated( df, BBox, mymap, code = 311812 ):
   df_filter_class = df[ df['Código_de_la_clase_de_actividad_SCIAN'] ==  code]
@@ -72,7 +70,6 @@ def plot_scatter_bussines_acumulated( df, BBox, mymap, code = 311812 ):
       ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=color[j], s=10)
   
   plt.savefig('../images_insights/'+str(code)+'.png')
-
 
 
 def main():
