@@ -15,3 +15,5 @@ National Survey of Seasonal Household Income and Expenses
 National Population and Housing Survey
 
 ## Collect Data
+
+We need to create line's code to discovered the step secuence for collect data eficient
