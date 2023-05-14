@@ -18,8 +18,6 @@ National Population and Housing Survey
 
 We need to create line's code to discovered the step secuence for collect data eficient
 
-https://photos.google.com/photo/AF1QipOjKi02gBmraazPnSok02cvQHrKhYA0QCDQLMTH
+<img title="" src="https://photos.app.goo.gl/4x6VwxaU6HRvJfS96" alt="/" data-align="center">
 
-![](/home/oscarsnva15/Descargas/IMG_20220707_173000.jpg)
-
-Add picture
+ADD EMBEBED
