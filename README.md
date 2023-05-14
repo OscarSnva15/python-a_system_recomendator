@@ -17,9 +17,3 @@ National Population and Housing Survey
 ## Collect Data
 
 We need to create line's code to discovered the step secuence for collect data eficient
-
-So, next we goint to follow the metodology
-
-![](/home/oscarsnva15/Documentos/python_system_recomendator/assets/img/IMG_20220707_173000.jpg)
-
-continue
