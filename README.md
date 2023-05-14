@@ -18,6 +18,8 @@ National Population and Housing Survey
 
 We need to create line's code to discovered the step secuence for collect data eficient
 
-<img title="" src="https://photos.app.goo.gl/4x6VwxaU6HRvJfS96" alt="/" data-align="center">
+So, next we goint to follow the metodology
 
-ADD EMBEBED
+![](/home/oscarsnva15/Documentos/python_system_recomendator/assets/img/IMG_20220707_173000.jpg)
+
+continue
