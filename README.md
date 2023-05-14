@@ -21,3 +21,5 @@ We need to create line's code to discovered the step secuence for collect data e
 https://photos.google.com/photo/AF1QipOjKi02gBmraazPnSok02cvQHrKhYA0QCDQLMTH
 
 ![](/home/oscarsnva15/Descargas/IMG_20220707_173000.jpg)
+
+Add picture
