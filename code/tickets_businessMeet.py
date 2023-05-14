@@ -34,7 +34,7 @@ def distance(lat1, lat2, lon1, lon2):
         # calculate the result
         return(c * r)
 
-df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
 
 # print( BBox )
 mymap = plt.imread("../media/map_CDNR.png")

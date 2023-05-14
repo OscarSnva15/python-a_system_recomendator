@@ -198,7 +198,7 @@ class data_business_filter:
         # averageList.insert(1,"Promedio")
         # dfExcel.loc[len(dfExcel)] = averageList
         
-        # writer = pd.ExcelWriter('../querys/dataExceLCreated/pruebaUno.xlsx', engine='xlsxwriter')
+        # writer = pd.ExcelWriter('./querys/dataExceLCreated/pruebaUno.xlsx', engine='xlsxwriter')
         # dfExcel.to_excel(writer, sheet_name='sheet1', index = True)
         # writer.save()
 
@@ -221,7 +221,7 @@ def generate_descriptors_for_business( ):
         VCDL = bussines_snapshot.report_accumulated_bussines_support()
         print(VCDL)
         dfExcel_VDC.loc[len(dfExcel_VDC)] = VCDL
-        writer_test = pd.ExcelWriter('../querys/dataExceLCreated/descriptors_VCDL.xlsx', engine='xlsxwriter')
+        writer_test = pd.ExcelWriter('./querys/dataExceLCreated/descriptors_VCDL.xlsx', engine='xlsxwriter')
         dfExcel_VDC.to_excel(writer_test, sheet_name='sheet1', index = True)
         writer_test.save()
 

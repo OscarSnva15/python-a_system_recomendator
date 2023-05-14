@@ -122,7 +122,7 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, diccionary):
             plt.savefig('../images_insights/test/'+'class_2_' + str(code)+'.png')
 #---
 def main():
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
     BBox = (-99.3686, -99.2670, 19.58, 19.65)
 
     # mymap = plt.imread("../media/map_CDNR.png")

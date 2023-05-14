@@ -183,7 +183,7 @@ class data_business_filter:
         averageList.insert(1,"Promedio")
         dfExcel.loc[len(dfExcel)] = averageList
         
-        writer = pd.ExcelWriter('../querys/dataExceLCreated/pruebaUno.xlsx', engine='xlsxwriter')
+        writer = pd.ExcelWriter('./querys/dataExceLCreated/pruebaUno.xlsx', engine='xlsxwriter')
         dfExcel.to_excel(writer, sheet_name='sheet1', index = True)
         writer.save()
         self.plot_escenary(Latitud, Longitud)

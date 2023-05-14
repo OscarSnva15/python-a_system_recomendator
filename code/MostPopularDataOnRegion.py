@@ -68,7 +68,7 @@ def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311520, target_loca
         plt.savefig('../images_insights/'+str(code)+'.png')
     
 def main():
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
     mymap = plt.imread("../media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
     target_location = [19.599472210151948, -99.30688849000485]

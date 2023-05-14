@@ -11,7 +11,7 @@ from itertools import permutations
 sns.set(style="darkgrid", color_codes=True)
 pd.set_option('display.max_columns', 75)
 
-data = pd.read_csv('../querys/corte_zone_tickets.csv', header = None)
+data = pd.read_csv('./querys/corte_zone_tickets.csv', header = None)
 # data.info()
 # print(data.head())
 # print(data.describe())

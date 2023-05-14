@@ -166,7 +166,7 @@ class data_business_filter:
             print(base['Nombre_de_la_Unidad_Económica'],', ', ', '.join(map(str,code)))
             dfExcel.iloc[posicion]=(str(self.epoch), str(base['Nombre_de_la_Unidad_Económica']), str(code[0]), str(code[1]), str(code[2]),str(code[3]),str(code[4]),str(code[5]),str(code[6]),str(code[7]),str(code[8]),str(code[9]),str(code[10]),str(code[11]),str(code[12]),str(code[13]),str(code[14]),str(code[15]),str(code[16]),str(code[17]),str(code[18]),str(code[19]),str(code[20]),str(code[21]),str(code[22]),str(code[23]),str(code[24]),str(code[25]),str(code[26]),str(code[27]),str(code[28]),str(code[29]),str(code[30]),str(code[31]),str(code[32]),str(code[33]),str(code[34]),str(code[35]),str(code[36]),str(code[37]),str(code[38]),str(code[39]),str(code[40]),str(code[41]),str(code[42]),str(code[43]),str(code[44]),str(code[45]),str(code[46]),str(code[47]),str(code[48]),str(code[49]),str(code[50]),str(code[51]),str(code[52]),str(code[53]),str(code[54]),str(code[55]),str(code[56]),str(code[57]),str(code[58]),str(code[59]),str(code[60]),str(code[61]),str(code[62]),str(code[63]),str(code[64]),str(code[65]),str(code[66]),str(code[67]),str(code[68]),str(code[69]),str(code[70]),str(code[71]),str(code[72]),str(code[73]),str(code[74]),str(code[75]),str(code[76]),str(code[77]),str(code[78]),str(code[79]),str(code[80]),str(code[81]),str(code[82]),str(code[83]),str(code[84]),str(code[85]),str(code[86]),str(code[87]),str(code[88]),str(code[89]))
             posicion = posicion + 1
-        writer = pd.ExcelWriter('../querys/dataExceLCreated/dashboard_CodeBussines.xlsx', engine='xlsxwriter')
+        writer = pd.ExcelWriter('./querys/dataExceLCreated/dashboard_CodeBussines.xlsx', engine='xlsxwriter')
         dfExcel.to_excel(writer, sheet_name='sheet1', index=True)
         writer.save()
         self.plot_escenary(Latitud, Longitud)
@@ -176,7 +176,7 @@ class data_business_filter:
 
 def get_productExcel():
     writer = pd.ExcelWriter('demo.xlsx', engine='xlsxwriter')
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
     # Create a Pandas Excel writer using XlsxWriter as the engine.
     writer = pd.ExcelWriter('demo.xlsx', engine='xlsxwriter')
     writer.save()
@@ -257,7 +257,7 @@ def main():
     Latitud, Longitud = [19.62054709688509, -99.31394730905744]
     time_window = 0
     # ratio = 0.000250
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
 
     mymap = plt.imread("../media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))

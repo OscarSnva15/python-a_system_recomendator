@@ -66,7 +66,7 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, diccionary):
 
 def main():
     #open my file data
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
     mymap = plt.imread("../media/map_CDNR.png")
     pĺot_density_business(df,BBox)

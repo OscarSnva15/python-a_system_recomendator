@@ -98,7 +98,7 @@ def get_scaterPlotBusinessClass(df,code,time_window):
 
 def get_productExcel():
     writer = pd.ExcelWriter('demo.xlsx', engine='xlsxwriter')
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
     # Create a Pandas Excel writer using XlsxWriter as the engine.
     writer = pd.ExcelWriter('demo.xlsx', engine='xlsxwriter')
     writer.save()
@@ -179,7 +179,7 @@ def main():
     key_classType= 812110
     time_window = 2
     ratio = 0.000250
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
     mymap = plt.imread("../media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
     code_list = [461110, 465311, 311830, 467111, 461122, 311812 ]

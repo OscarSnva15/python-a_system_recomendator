@@ -194,7 +194,7 @@ class data_business_filter:
 
 def generate_descriptors_for_business( ):
     time_window = 2
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
 
     list_codes = [468420]
     dfExcel_VDC = pd.DataFrame(columns = ['snapTime','nameBussines', '461110', '465311', '812110', '463211', '722513', '461122', '461160', '722514', '461130', '311812', '467111', '311830', '722517', '467115', '561432', '722518', '464111', '461121', '811111', '722519', '722515', '621211', '332320', '461190', '465912', '466410', '713120', '531113', '811121', '813210', '468211', '461150', '811191', '463310', '713943', '321910', '465111', '722511', '467114', '466312', '611111', '812210', '621111', '461170', '811192', '811112', '461140', '312112', '465211', '811499', '811430', '466212', '461213', '811410', '464113', '722412', '466111', '434211', '434311', '611112', '434112', '463113', '462112', '464112', '811119', '463215', '811211', '541920', '541110', '323119', '467113', '811492', '337120', '812410', '463213', '813230', '931610', '468112', '811219', '811420', '541941', '311520', '722512', '621398', '311910', '812130', '621511', '532282', '611621', '468420'])
@@ -205,7 +205,7 @@ def generate_descriptors_for_business( ):
         VCDL = bussines_snapshot.report_accumulated_bussines_support()
         print(VCDL)
         dfExcel_VDC.loc[len(dfExcel_VDC)] = VCDL
-        writer_test = pd.ExcelWriter('../querys/dataExceLCreated/descriptors_VCDL.xlsx', engine='xlsxwriter')
+        writer_test = pd.ExcelWriter('./querys/dataExceLCreated/descriptors_VCDL.xlsx', engine='xlsxwriter')
         dfExcel_VDC.to_excel(writer_test, sheet_name='sheet1', index = True)
         writer_test.save()
 
@@ -282,7 +282,7 @@ def main():
     Latitud, Longitud = [19.62054709688509, -99.31394730905744]
     time_window = 0
     # ratio = 0.000250
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
 
     mymap = plt.imread("../media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))

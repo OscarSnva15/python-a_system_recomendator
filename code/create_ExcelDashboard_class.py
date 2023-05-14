@@ -188,7 +188,7 @@ class data_business_filter:
         # averageList.insert(1,"Promedio")
         # dfExcel.loc[len(dfExcel)] = averageList
         
-        # writer = pd.ExcelWriter('../querys/dataExceLCreated/pruebaUno.xlsx', engine='xlsxwriter')
+        # writer = pd.ExcelWriter('./querys/dataExceLCreated/pruebaUno.xlsx', engine='xlsxwriter')
         # dfExcel.to_excel(writer, sheet_name='sheet1', index = True)
         # writer.save()
 
@@ -199,7 +199,7 @@ class data_business_filter:
 
 def get_productExcel():
     writer = pd.ExcelWriter('demo.xlsx', engine='xlsxwriter')
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
     # Create a Pandas Excel writer using XlsxWriter as the engine.
     writer = pd.ExcelWriter('demo.xlsx', engine='xlsxwriter')
     writer.save()
@@ -279,7 +279,7 @@ def main():
     Latitud, Longitud = [19.62054709688509, -99.31394730905744]
     time_window = 0
     # ratio = 0.000250
-    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
 
     mymap = plt.imread("../media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
