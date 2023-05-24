@@ -79,7 +79,7 @@ class data_business_filter:
     def plot_escenary(self, lat, long):
         fig, ax = plt.subplots(figsize = (22,12))
         ax.scatter(self.filter_bussines.Longitud, self.filter_bussines.Latitud, zorder=1, alpha= 0.4, c='r', s=10)
-        mymap = plt.imread("../media/map_CDNR.png")
+        mymap = plt.imread("./media/map_CDNR.png")
         BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 
         x_values = [(BBox[0]+BBox[1])/2, (BBox[0]+BBox[1])/2 + self.influence_radio]
@@ -211,7 +211,7 @@ def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311812, target_loca
         for j in range(i+1):
             ax[i].scatter(df_filter_class_location[j]['Longitud'], df_filter_class_location[j]['Latitud'], zorder=1, alpha= 0.71, c=color[j], s=10)
 
-        plt.savefig('../images_insights/'+str(code)+'.png')
+        plt.savefig('./images_insights/'+str(code)+'.png')
 
 def plot_scatter_bussines_by_code(df, BBox, mymap, code_list ):
     color=iter(cm.rainbow(np.linspace(0,1,20)))
@@ -245,7 +245,7 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, code_list ):
             for j in range(i+1):
                 ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=c, s=10)
 
-        plt.savefig('../images_insights/test/' + "{:03d}".format(rank) + '_' + str(code)+'.png')
+        plt.savefig('./images_insights/test/' + "{:03d}".format(rank) + '_' + str(code)+'.png')
         plt.clf()
 
 def main():
@@ -255,7 +255,7 @@ def main():
     # ratio = 0.000250
     df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
 
-    mymap = plt.imread("../media/map_CDNR.png")
+    mymap = plt.imread("./media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 
     bussines_snapshot =  data_business_filter( df, code, time_window)

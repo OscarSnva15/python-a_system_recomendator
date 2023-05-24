@@ -62,7 +62,7 @@ def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311812, target_loca
         for j in range(i+1):
             ax[i].scatter(df_filter_class_location[j]['Longitud'], df_filter_class_location[j]['Latitud'], zorder=1, alpha= 0.71, c=color[j], s=10)
 
-        plt.savefig('../images_insights/'+str(code)+'.png')
+        plt.savefig('./images_insights/'+str(code)+'.png')
 
 
 def plot_scatter_bussines_by_code(df, BBox, mymap, code_list  ):
@@ -100,12 +100,12 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, code_list  ):
             for j in range(i+1):
                 ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=c, s=10)
 
-        plt.savefig('../images_insights/test/' + "{:03d}".format(rank) + '_' + str(code)+'.png')
+        plt.savefig('./images_insights/test/' + "{:03d}".format(rank) + '_' + str(code)+'.png')
         plt.clf()
 
 def main():
     df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
-    mymap = plt.imread("../media/map_CDNR.png")
+    mymap = plt.imread("./media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 
     # target_location = [19.599472210151948, -99.30688849000485]

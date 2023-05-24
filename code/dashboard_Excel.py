@@ -30,16 +30,16 @@ def plot_dashboard(df, BBox, mymap, code_list ):
             ax[i].set_xlim(BBox[0],BBox[1])
             ax[i].set_ylim(BBox[2],BBox[3])
             ax[i].imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
-            for k in range()
-            ax[i].set_xlabel(df_filter_class_snaptime[k]['Nombre_de_la_Unidad_Económica'])
+            for k in range(i+1):
+                ax[i].set_xlabel(df_filter_class_snaptime[k]['Nombre_de_la_Unidad_Económica'])
             
             for j in range(i+1):
                 ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=c, s=10)
-            plt.savefig('../images_insights/class_three/'+'class_3_' + str(code)+'.png')
+            plt.savefig('./images_insights/class_three/'+'class_3_' + str(code)+'.png')
 
 def main():
     df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
-    mymap = plt.imread("../media/map_CDNR.png")
+    mymap = plt.imread("./media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
     # target_location = [19.599472210151948, -99.30688849000485]
     # plot_scatter_bussines_acumulated( df, BBox, mymap, 461110, target_location )

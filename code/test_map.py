@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv("../consultas/crecimientoNicolasRomero.csv")
+df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
 
 # print(df.head())
 
@@ -13,7 +13,7 @@ df = pd.read_csv("../consultas/crecimientoNicolasRomero.csv")
 # BBox = ((-99.3243, -99.3091, 19.6303, 19.6206))
 
 # print( BBox )
-mymap = plt.imread("../media/map_CDNR.png")
+mymap = plt.imread("./media/map_CDNR.png")
 BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 
 print( df.columns )

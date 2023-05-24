@@ -26,11 +26,11 @@ def distance(lat1, lat2, lon1, lon2):
 
 
 
-df = pd.read_csv("../consultas/crecimientoNicolasRomero.csv")
+df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
 
 
 # print( BBox )
-mymap = plt.imread("../media/map_CDNR.png")
+mymap = plt.imread("./media/map_CDNR.png")
 BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 
 #print( df.columns )

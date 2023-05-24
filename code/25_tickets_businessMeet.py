@@ -37,7 +37,7 @@ def distance(lat1, lat2, lon1, lon2):
 df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
 
 # print( BBox )
-mymap = plt.imread("../media/map_CDNR.png")
+mymap = plt.imread("./media/map_CDNR.png")
 BBox = ((-99.3097, -99.3186, 19.6410, 19.6462))
 
 near_latitude = []

@@ -10,8 +10,8 @@ class Business:
         self.clave = clave
         self.age = age
 
-df_VAGB = pd.read_csv('../category_data/DENSIDAD(1)_AGB_COLONIA/nicolas_romero_CDAGB.csv')
-df_NAGB = pd.read_csv('../category_data/DENUE_DATOS_CRECIMIENTO/consultasNicolasRomero/crecimientoNicolasRomero.csv')
+df_VAGB = pd.read_csv('./category_data/DENSIDAD(1)_AGB_COLONIA/nicolas_romero_CDAGB.csv')
+df_NAGB = pd.read_csv('./category_data/DENUE_DATOS_CRECIMIENTO/consultasNicolasRomero/crecimientoNicolasRomero.csv')
 df = pd.DataFrame(columns=['region_name', 'agb', 'density'])
 
 for i in df_VAGB.index:
