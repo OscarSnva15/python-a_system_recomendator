@@ -17,3 +17,4 @@ from sklearn.metrics import confusion_matrix
 # 1.- Calcular la distancia entre el item a clasificar y el resto de items del dataset de entrenamiento.
     # show neihgbour file code_19(the file is iterate wich one disctance an one type of bussines)
     # show neihgbour file code_3(the file is iterate wich one disctance an one type of bussines)
+    #create the file comparations bettwen two thesys abouth the same topic
