@@ -28,4 +28,4 @@ with pd.option_context('display.max_rows', num_of_rows_to_show):
     display(dataCollect)
     
 df = pd.DataFrame(dataCollect)
-dfi.export(df.head(n=10), 'dataframeCollect.png')
+dfi.export(df.head(n=100), 'dataframeCollectTwo.png')
