@@ -37,8 +37,15 @@ from scipy.spatial import distance
 from scipy.stats import norm
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import pandas as pd
 mpl.style.use('ggplot')
 
+# Funcion para calcular la distancia entre el item a clasificar y el resto de items del dataset de entrenamiento.
+def crear_items():
+    """This function works always to create items from file csv., The items are microenterprises
+    """
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
+    return
 
 def MCarlo_mean_dist(trials, sample_size, x_size, y_size):
     """ Apply a Monte Carlo simulation to estimate mean nearest neighbour
@@ -51,7 +58,7 @@ def MCarlo_mean_dist(trials, sample_size, x_size, y_size):
         the number of trials
 
     sample_size: positive integer
-       the sample size
+        the sample size
 
     x_size: integer or float
         x-axis size
@@ -199,3 +206,10 @@ def gen_matrix(x, y):
     y = np.matrix(y)
 
     return np.concatenate((x.T, y.T), axis=1)
+
+def main():
+    print('crear primero, el seguir las instrucciones')
+    crear_items()
+
+if __name__ == "__main__":
+    main()
