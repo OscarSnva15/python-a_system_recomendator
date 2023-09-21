@@ -39,13 +39,16 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import pandas as pd
 mpl.style.use('ggplot')
+from math import dist, radians, cos, sin, asin, sqrt
 
 # Funcion para calcular la distancia entre el item a clasificar y el resto de items del dataset de entrenamiento.
 def crear_items():
     """This function works always to create items from file csv., The items are microenterprises
     """
     df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
+    dataCodes = df['ID']
     return
+
 
 def MCarlo_mean_dist(trials, sample_size, x_size, y_size):
     """ Apply a Monte Carlo simulation to estimate mean nearest neighbour
