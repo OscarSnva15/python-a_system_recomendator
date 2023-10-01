@@ -211,8 +211,12 @@ def gen_matrix(x, y):
     return np.concatenate((x.T, y.T), axis=1)
 
 def main():
-    print('crear primero, el seguir las instrucciones')
-    crear_items()
+    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
+    cordenates_x = df['Longitud'] 
+    cordenates_y = df['Latitud']
+    #revisar literatura, e investigar con el doc 
+    
+    coordenates = gen_matrix(x,y)
 
 if __name__ == "__main__":
     main()
