@@ -1,36 +1,3 @@
-# -*- coding: utf-8 -*-
-# ============================================================================ #
-#                                                                              #
-#    Nearest_neighbour Script                                                  #
-#    A Python script to estimate the nearest neighbour distance and perform    #
-#    and nearest neighbour Monte Carlo simulations                             #
-#                                                                              #
-#    Copyright (c) 2017-present   Marco A. Lopez-Sanchez                       #
-#                                                                              #
-#    Licensed under the Apache License, Version 2.0 (the "License");           #
-#    you may not use this file except in compliance with the License.          #
-#    You may obtain a copy of the License at                                   #
-#                                                                              #
-#        http://www.apache.org/licenses/LICENSE-2.0                            #
-#                                                                              #
-#    Unless required by applicable law or agreed to in writing, software       #
-#    distributed under the License is distributed on an "AS IS" BASIS,         #
-#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  #
-#    See the License for the specific language governing permissions and       #
-#    limitations under the License.                                            #
-#                                                                              #
-#    Version 1.0                                                               #
-#    For details see: http://marcoalopez.github.io/nearest_neighbour           #
-#    download at https://github.com/marcoalopez/nearest_neighbour/releases     #
-#                                                                              #
-#    Requirements:                                                             #
-#        Python version 3.5.x or higher                                        #
-#        Numpy version 1.11 or higher                                          #
-#        Matplotlib version 1.5.3 or higher                                    #
-#        Scipy version 0.13 or higher                                          #
-#                                                                              #
-# ============================================================================ #
-
 # import required libraries
 import numpy as np
 from scipy.spatial import distance
