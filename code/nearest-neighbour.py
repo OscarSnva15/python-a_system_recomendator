@@ -16,7 +16,6 @@ def crear_items():
     dataCodes = df['ID']
     return
 
-
 def MCarlo_mean_dist(trials, sample_size, x_size, y_size):
     """ Apply a Monte Carlo simulation to estimate mean nearest neighbour
     distance in a finite 2D space considering: (1) a defined sample size
