@@ -13,7 +13,7 @@ import numpy as np
 from dataclasses import dataclass
 
 from psutil import users
-
+#this code can be improve, to algoritmo neihbohord
 def distance(lat1, lat2, lon1, lon2):
         # The math module contains a function named
         # radians which converts from degrees to radians.
@@ -269,7 +269,7 @@ def main():
     print( "radio KM: ",distance(0,bussines_snapshot.influence_radio ,0,0) )
     print( "total bussines in radio: ", len(bussines_snapshot.bussines_neighborhood_acc) )
     print( "0.00099 to KM: ",distance(0,0.00099 ,0,0) )
-    # bussines_snapshot.report_accumulated_bussines_support()
+    bussines_snapshot.report_accumulated_bussines_support()
     code_list = [461110, 465311, 311830, 467111, 461122, 311812 ]
     # get_setBusinessClass(df,code,time_window)
     # get_averageDistanceClass(df,code,time_window)
