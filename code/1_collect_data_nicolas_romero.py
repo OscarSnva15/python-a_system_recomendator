@@ -3,4 +3,4 @@ import pandas as pd
 
 df = pd.read_csv('./querys/crecimientoNicolasRomero.csv')
 
-print(df.to_string())
+print('df.to_string()')
