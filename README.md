@@ -23,3 +23,4 @@ So first we need to focus on the problem.
 1.- Test all codes from directory original
 
 1.2 .- I need to create a list details about  each code.
+        create a jupiter environtment to run scripts, that`s be usefull for the project gral 
