@@ -19,3 +19,7 @@ National Population and Housing Survey
 We are lost, because the book note is not complete about system recomendation.
 
 So first we need to focus on the problem.
+
+1.- Test all codes from directory original
+
+1.2 .- I need to create a list details about  each code.
