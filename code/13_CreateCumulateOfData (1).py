@@ -104,8 +104,8 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, code_list  ):
         plt.clf()
 
 def main():
-    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
-    mymap = plt.imread("./media/map_CDNR.png")
+    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+    mymap = plt.imread("../media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 
     # target_location = [19.599472210151948, -99.30688849000485]

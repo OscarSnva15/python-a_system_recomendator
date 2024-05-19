@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-df = pd.read_csv(".categoria/DENUE/test.csv")
+df = pd.read_csv("../category_data/DENUE/test.csv")
 
 print(df.head())
 
@@ -13,7 +13,7 @@ BBox = ((df.Longitud.min(),   df.Longitud.max(),
 print( BBox )
 
 
-mymap = plt.imread("./map.png")
+mymap = plt.imread("../map.png")
 fig, ax = plt.subplots(figsize = (8,7))
 ax.scatter(df.Longitud, df.Latitud, zorder=1, alpha= 0.2, c='b', s=10)
 ax.set_title('Plotting Spatial Data on Map')

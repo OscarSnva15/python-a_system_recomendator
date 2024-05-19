@@ -31,7 +31,7 @@ def accumulated_geolocation_bussines(df,BBox):
     num_long=int((BBox[3] - BBox[2])/delta)
     
     location = {}
-    l = df.count()[0]
+    #l = df.count()[0]
     for i, row in df.iterrows():
         loc_latt = int( (row['Latitud'] - BBox[0]) / delta )
         loc_long = int( (row['Longitud'] - BBox[2]) / delta )
@@ -78,7 +78,7 @@ def accumulated_geolocation_bussines(df,BBox):
 
     # color_value = [ acc for acc in accumulated ] 
 
-    mymap = plt.imread("./media/map_CDNR.png")
+    mymap = plt.imread("../media/map_CDNR.png")
     fig, ax = plt.subplots(figsize = (18,16))
     ax.scatter(longituds, latituds, s=10, c='r') #c=color_value, cmap='jet' )
     ax.set_title('Plotting Spatial Data on Map')
@@ -119,13 +119,13 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, diccionary):
             for j in range(i+1):
                 ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=c, s=10)
 
-            plt.savefig('./images_insights/test/'+'class_2_' + str(code)+'.png')
+            plt.savefig('../images_insights/test/'+'class_2_' + str(code)+'.png')
 #---
 def main():
-    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
     BBox = (-99.3686, -99.2670, 19.58, 19.65)
 
-    # mymap = plt.imread("./media/map_CDNR.png")
+    # mymap = plt.imread("../media/map_CDNR.png")
     accumulated_geolocation_bussines(df, BBox )
 
 

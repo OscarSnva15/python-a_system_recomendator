@@ -259,9 +259,9 @@ def main():
     Latitud, Longitud = [19.62054709688509, -99.31394730905744]
     time_window = 0
     # ratio = 0.000250
-    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
 
-    mymap = plt.imread("./media/map_CDNR.png")
+    mymap = plt.imread("../media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 
     bussines_snapshot =  data_business_filter( df, Listcode, time_window)
@@ -269,6 +269,7 @@ def main():
     print( "radio KM: ",distance(0,bussines_snapshot.influence_radio ,0,0) )
     print( "total bussines in radio: ", len(bussines_snapshot.bussines_neighborhood_acc) )
     print( "0.00099 to KM: ",distance(0,0.00099 ,0,0) )
+    #send info to scenary... plot map NR with coordenates
     bussines_snapshot.report_accumulated_bussines_support()
     code_list = [461110, 465311, 311830, 467111, 461122, 311812 ]
     # get_setBusinessClass(df,code,time_window)

@@ -5,7 +5,7 @@ import array
 import dataframe_image as dfi
 
 #1 load data fror file csv
-df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
+df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
 
 dataCodes = df['ID']
 arrayCodes  = []
