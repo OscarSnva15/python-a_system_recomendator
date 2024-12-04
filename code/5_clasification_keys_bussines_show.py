@@ -73,8 +73,8 @@ def plot_scatter_bussines_acumulated( df, BBox, mymap, code = 311812 ):
 
 
 def main():
-  df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
-  mymap = plt.imread("./media/map_CDNR.png")
+  df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
+  mymap = plt.imread("../media/map_CDNR.png")
   BBox = ((-99.3686, -99.2670, 19.58, 19.65))
   code_business = []
   plot_scatter_bussines_acumulated(df, BBox, mymap, 461110)

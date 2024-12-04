@@ -11,6 +11,7 @@ from matplotlib import pyplot as plt
 from matplotlib.pyplot import cm
 import numpy as np
 from dataclasses import dataclass
+import seaborn as sns
 
 
 def distance(lat1, lat2, lon1, lon2):
@@ -65,10 +66,10 @@ class data_business_filter:
         filtered = None
         #apply filter time on overview data
         if self.epoch == 0:
-            filtered =  df_filter_general[ df_filter_general['Fecha_de_incorporacion_al_DENUE'] < '2014-12' ]
+            filtered =  df_filter_general[df_filter_general['Fecha_de_incorporacion_al_DENUE'] < '2014-12']
         elif self.epoch == 1:
             # filtered =  df_filter_general[(df_filter_general['Fecha_de_incorporacion_al_DENUE'] >= '2014-12') & (df_filter_general['Fecha_de_incorporacion_al_DENUE'] < '2019-11') ]
-            filtered =  df_filter_general[ df_filter_general['Fecha_de_incorporacion_al_DENUE'] < '2019-11' ]
+            filtered =  df_filter_general[df_filter_general['Fecha_de_incorporacion_al_DENUE'] < '2019-11']
         elif self.epoch == 2:
             # filtered =  df_filter_general[ df_filter_general['Fecha_de_incorporacion_al_DENUE'] >= '2019-11' ]
             filtered =  df_filter_general
@@ -78,7 +79,6 @@ class data_business_filter:
         print( "epoch", self.epoch, "  TOTAL CODE-BUSSINESS FOUND: ",len(filtered) )
 
         return filtered
-
 
     def plot_escenary(self, lat, long):
         fig, ax = plt.subplots(figsize = (22,12))
@@ -105,12 +105,14 @@ class data_business_filter:
         ax.imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
         plt.show()
 
+
+
     def __get_bussines_neighborhood_acc(self):
         #obtain the dataframe that have data abouth rangeAverage and dataframe class business
         self.intradistances_target_bussines = self.__get_average_distance_for_BussinesCode()
 
-        self.influence_radio_2 = float(self.intradistances_target_bussines.mode().mean()) / 2
-        self.influence_radio = float(self.intradistances_target_bussines.mean()) / 2
+        self.influence_radio_2 = float(self.intradistances_target_bussines.mode().mean().iloc[0]) / 2
+        self.influence_radio = float(self.intradistances_target_bussines.mean().iloc[0]) / 2
 
         print("self.influence_radio mode mean: ", self.influence_radio_2)
         print("self.influence_radio mean*: ", self.influence_radio)
@@ -145,6 +147,11 @@ class data_business_filter:
         # ploter histograma of datafram distances
         # plt.hist(list_distances, bins=40)
         # plt.show()
+        # Add this
+        sns.boxplot(df_distances['Distances_Totals_Between_BusinessTypeClass'])
+        plt.title('Distribución de Distancias (Boxplot)')
+        plt.xlabel('Distancia')
+        plt.show()
 
 
         return  df_distances
@@ -206,10 +213,15 @@ class data_business_filter:
 
         return VCDL
 
+    import matplotlib.pyplot as plt
+    from geopy.distance import geodesic
+    import pandas as pd
+
+
 
 def generate_descriptors_for_business( ):
     time_window = 2
-    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
 
     list_codes = [461110, 465311, 812110, 463211, 722513, 461122, 461160, 722514, 461130, 311812, 467111, 311830, 722517, 467115, 561432, 722518, 464111, 461121, 811111, 722519, 722515, 621211, 332320, 461190, 465912, 466410, 713120, 531113, 811121, 813210, 468211, 461150, 811191, 463310, 713943, 321910, 465111, 722511, 467114, 466312, 611111, 812210, 621111, 461170, 811192, 811112, 461140, 312112, 465211, 811499, 811430, 466212, 461213, 811410, 464113, 722412, 466111, 434211, 434311, 611112, 434112, 463113, 462112, 464112, 811119, 463215, 811211, 541920, 541110, 323119, 467113, 811492, 337120, 812410, 463213, 813230, 931610, 468112, 811219, 811420, 541941, 311520, 722512, 621398, 311910, 812130, 621511, 532282, 611621, 468420, 811491, 465914, 466114, 465212, 812990, 464121, 811493, 463212, 811312, 461212, 811199, 465215, 811115, 812310, 465911, 621311, 468311, 332710, 624191, 465915, 621331, 315225, 434314, 327330, 611122, 621320, 468412, 541211, 463216, 461211, 931210, 315223, 811114, 434312, 465313, 112512, 611611, 522452, 811129, 465112, 434224, 434319, 339999, 468213, 611691, 621113, 466319, 624411, 811116, 713991, 434221, 465919, 466112, 611121, 611182, 434225, 467112, 532281, 463112, 466211, 435319, 314991, 434229, 315229, 722516, 463217, 611511, 463214, 532411, 713998, 221312, 931410, 466311, 621341, 332310, 532493, 721113, 811113, 221311, 238210, 463111, 337110, 611171, 461123, 611132, 434219, 337210, 435313, 465913, 561431, 321920, 541430, 468413, 468419, 624199, 463218, 541890, 332810, 611172, 621115, 812322]
     list_codes.reverse()
@@ -221,11 +233,8 @@ def generate_descriptors_for_business( ):
         VCDL = bussines_snapshot.report_accumulated_bussines_support()
         print(VCDL)
         dfExcel_VDC.loc[len(dfExcel_VDC)] = VCDL
-        writer_test = pd.ExcelWriter('./querys/dataExceLCreated/descriptors_VCDL.xlsx', engine='xlsxwriter')
+        writer_test = pd.ExcelWriter('../querys/dataExceLCreated/descriptors_VCDL.xlsx', engine='xlsxwriter')
         dfExcel_VDC.to_excel(writer_test, sheet_name='sheet1', index = True)
-        writer_test.save()
-
-
 
 def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311812, target_location=[19.599472210151948, -99.30688849000485]):
 
@@ -292,7 +301,7 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, code_list ):
             ax[i].imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
             for j in range(i+1):
                 ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=c, s=10)
-        plt.savefig('./images_insights/test/' + "{:03d}".format(rank) + '_' + str(code)+'.png')
+        plt.savefig('../images_insights/test/' + "{:03d}".format(rank) + '_' + str(code)+'.png')
         plt.clf()
 
 def main():
@@ -300,11 +309,11 @@ def main():
     Latitud, Longitud = [19.62054709688509, -99.31394730905744]
     time_window = 0
     # ratio = 0.000250
-    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
 
     bussines_snapshot =  data_business_filter( df, code, time_window)
-    print( "bussines_snapshot.influence_radio : ", bussines_snapshot.influence_radio )
-    print( "radio KM: ",distance(0,bussines_snapshot.influence_radio ,0,0) )
+    print( "bussines_snapshot.influence_radio : ", bussines_snapshot.influence_radio)
+    print( "radio KM: ",distance(0,bussines_snapshot.influence_radio ,0,0))
 
     # bussines_snapshot.report_accumulated_bussines_support()
     generate_descriptors_for_business()

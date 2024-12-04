@@ -77,7 +77,7 @@ class data_business_filter:
     def plot_escenary(self, lat, long):
         fig, ax = plt.subplots(figsize = (22,12))
         ax.scatter(self.filter_bussines.Longitud, self.filter_bussines.Latitud, zorder=1, alpha= 0.4, c='r', s=10)
-        mymap = plt.imread("./media/map_CDNR.png")
+        mymap = plt.imread("../media/map_CDNR.png")
         BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 
         x_values = [(BBox[0]+BBox[1])/2, (BBox[0]+BBox[1])/2 + self.influence_radio]
@@ -103,8 +103,8 @@ class data_business_filter:
         #obtain the dataframe that have data abouth rangeAverage and dataframe class business
         self.intradistances_target_bussines = self.__get_average_distance_for_BussinesCode()
 
-        self.influence_radio_2 = float(self.intradistances_target_bussines.mode().mean()) / 2
-        self.influence_radio = float(self.intradistances_target_bussines.mean()) / 2
+        self.influence_radio_2 = float(self.intradistances_target_bussines.mode().mean().iloc[0]) / 2
+        self.influence_radio = float(self.intradistances_target_bussines.mean().iloc[0]) / 2
 
         print("self.influence_radio mode mean: ", self.influence_radio_2)
         print("self.influence_radio mean: ", self.influence_radio)
@@ -271,7 +271,7 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, code_list ):
             for j in range(i+1):
                 ax[i].scatter(df_filter_class_snaptime[j]['Longitud'], df_filter_class_snaptime[j]['Latitud'], zorder=1, alpha= 0.71, c=c, s=10)
 
-        plt.savefig('./images_insights/test/' + "{:03d}".format(rank) + '_' + str(code)+'.png')
+        plt.savefig('../images_insights/test/' + "{:03d}".format(rank) + '_' + str(code)+'.png')
         plt.clf()
 
 def main():
@@ -279,9 +279,9 @@ def main():
     Latitud, Longitud = [19.62054709688509, -99.31394730905744]
     time_window = 0
     # ratio = 0.000250
-    df = pd.read_csv("./querys/crecimientoNicolasRomero.csv")
+    df = pd.read_csv("../querys/crecimientoNicolasRomero.csv")
 
-    mymap = plt.imread("./media/map_CDNR.png")
+    mymap = plt.imread("../media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 
     bussines_snapshot =  data_business_filter( df, code, time_window)

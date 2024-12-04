@@ -15,8 +15,7 @@ from dataclasses import dataclass
 from psutil import users
 #this code can be improve, to algoritmo neihbohord
 def distance(lat1, lat2, lon1, lon2):
-        # The math module contains a function named
-        # radians which converts from degrees to radians.
+        # The math module contains a function named radians which converts from degrees to radians.
         lon1 = radians(lon1)
         lon2 = radians(lon2)
         lat1 = radians(lat1)
@@ -31,8 +30,10 @@ def distance(lat1, lat2, lon1, lon2):
         # calculate the result
         return(c * r)
 
+#created a data class
 @dataclass 
 class data_business_filter:
+    #attribute declaration
     code_bussines : list
     epoch : int
     filter_bussines : pd.DataFrame
@@ -44,6 +45,7 @@ class data_business_filter:
     accumulated_neighborhood_bussines : dict
     code_poles : set
 
+    #Attribute initialization by calling the INIT method, instantiating the class at the same time.
     def __init__(self, df, code_bussines, epoch ):
         self.code_bussines = code_bussines
         self.epoch = epoch
@@ -51,67 +53,38 @@ class data_business_filter:
         self.filter_bussines = self.__filter_by_code()
         self.bussines_neighborhood_acc = self.__get_bussines_neighborhood_acc()
 
-    def __set_code_poles(self):
-            # self.code_poles = ( 311520, 311812, 311830, 311910, 312112, 321910, 323119, 332320, 337120, 434112, 434211, 434311, 461110, 461121, 461122, 461130, 461140, 461150, 461160, 461170, 461190, 461213, 462112, 463113, 463211, 463213, 463215, 463310, 464111, 464112, 464113, 465111, 465211, 465311, 465912, 466111, 466212, 466312, 466410, 467111, 467113, 467114, 467115, 468112, 468211, 468420, 531113, 532282, 541110, 541920, 541941, 561432, 611111, 611112, 611621, 621111, 621211, 621398, 621511, 713120, 713943, 722412, 722511, 722512, 722513, 722514, 722515, 722517, 722518, 722519, 811111, 811112, 811119, 811121, 811191, 811192, 811211, 811219, 811410, 811420, 811430, 811492, 811499, 812110, 812130, 812210, 812410, 813210, 813230, 931610)
-            self.code_poles = (461110, 465311, 812110, 463211, 722513, 461122, 461160, 722514, 461130, 311812, 467111, 311830, 722517, 467115, 561432, 722518, 464111, 461121, 811111, 722519, 722515, 621211, 332320, 461190, 465912, 466410, 713120, 531113, 811121, 813210, 468211, 461150, 811191, 463310, 713943, 321910, 465111, 722511, 467114, 466312, 611111, 812210, 621111, 461170, 811192, 811112, 461140, 312112, 465211, 811499, 811430, 466212, 461213, 811410, 464113, 722412, 466111, 434211, 434311, 611112, 434112, 463113, 462112, 464112, 811119, 463215, 811211, 541920, 541110, 323119, 467113, 811492, 337120, 812410, 463213, 813230, 931610, 468112, 811219, 811420, 541941, 311520, 722512, 621398, 311910, 812130, 621511, 532282, 611621, 468420)
-
+    #This Method helps show the count of microbusinesses at the required time by epoch.(retorna el DataFrame filtrado del último código procesado)
     def __filter_by_code(self):
-        #snaptime overview data
-        for code in self.code_bussines :
-            print("codes:",code)
-            
-            df_filter_general = self.df_complete[ self.df_complete['Código_de_la_clase_de_actividad_SCIAN'] ==  code]
-
-            #snaptime windows df
+        # snaptime overview data
+        for code in self.code_bussines:
+            print("codes:", code)
+            df_filter_general = self.df_complete[self.df_complete['Código_de_la_clase_de_actividad_SCIAN'] == code]
+            # snaptime windows df
             filtered = None
-            #apply filter time on overview data
+            # apply filter time on overview data
             if self.epoch == 0:
-                filtered =  df_filter_general[ df_filter_general['Fecha_de_incorporacion_al_DENUE'] < '2014-12' ]
+                filtered = df_filter_general[df_filter_general['Fecha_de_incorporacion_al_DENUE'] < '2014-12']
             elif self.epoch == 1:
                 # filtered =  df_filter_general[(df_filter_general['Fecha_de_incorporacion_al_DENUE'] >= '2014-12') & (df_filter_general['Fecha_de_incorporacion_al_DENUE'] < '2019-11') ]
-                filtered =  df_filter_general[ df_filter_general['Fecha_de_incorporacion_al_DENUE'] < '2019-11' ]
+                filtered = df_filter_general[df_filter_general['Fecha_de_incorporacion_al_DENUE'] < '2019-11']
             elif self.epoch == 2:
                 # filtered =  df_filter_general[ df_filter_general['Fecha_de_incorporacion_al_DENUE'] >= '2019-11' ]
-                filtered =  df_filter_general
+                filtered = df_filter_general
             else:
                 filtered = df_filter_general
-            print( "epoch", self.epoch, "  TOTAL CODE-BUSSINESS FOUND: ",len(filtered) )
+            print("epoch", self.epoch, "  TOTAL CODE-BUSSINESS FOUND: ", len(filtered))
         return filtered
 
-    def plot_escenary(self, lat, long):
-        fig, ax = plt.subplots(figsize = (22,12))
-        ax.scatter(self.filter_bussines.Longitud, self.filter_bussines.Latitud, zorder=1, alpha= 0.4, c='r', s=10)
-        mymap = plt.imread("./media/map_CDNR.png")
-        BBox = ((-99.3686, -99.2670, 19.58, 19.65))
-
-        x_values = [(BBox[0]+BBox[1])/2, (BBox[0]+BBox[1])/2 + self.influence_radio]
-        y_values = [(BBox[3]+BBox[2])/2, (BBox[3]+BBox[2])/2  ]
-        ax.plot(x_values, y_values, c='b')
-
-        x_values = [(BBox[0]+BBox[1])/2, (BBox[0]+BBox[1])/2 ]
-        y_values = [(BBox[3]+BBox[2])/2, (BBox[3]+BBox[2])/2 + + self.influence_radio_2 ]
-        ax.plot(x_values, y_values, c='r')
-
-
-        ax.scatter(self.filter_bussines.Longitud, self.filter_bussines.Latitud, alpha= 0.4, facecolor='maroon', s=int(self.influence_radio*1450000))
-
-        ax.scatter(long, lat, zorder=1, alpha= 0.4, c='b', s=10)
-
-        ax.set_title('Plotting Spatial Data on Map')
-        ax.set_xlim(BBox[0],BBox[1])
-        ax.set_ylim(BBox[2],BBox[3])
-        ax.imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
-        plt.show()
-
+    #This method obtains the mode and statistical mean of distance between the two specified types of microbusinesses established by epoch.
     def __get_bussines_neighborhood_acc(self):
-        #obtain the dataframe that have data abouth rangeAverage and dataframe class business
+        #obtain the dataframe that have data abouth  and dataframe class business, The function calculates the minimum distance between each business and the other businesses in the filtered set
         self.intradistances_target_bussines = self.__get_average_distance_for_BussinesCode()
 
-        self.influence_radio_2 = float(self.intradistances_target_bussines.mode().mean()) / 2
-        self.influence_radio = float(self.intradistances_target_bussines.mean()) / 2
+        self.influence_radio_2 = float(self.intradistances_target_bussines.mode().mean().iloc[0]) / 2
+        self.influence_radio = float(self.intradistances_target_bussines.mean().iloc[0]) / 2
 
-        print("self.influence_radio mode mean: ", self.influence_radio_2)
-        print("self.influence_radio mean: ", self.influence_radio)
+        print("self.influence_radio mode mean (mediana de la moda estadistica): ", self.influence_radio_2)
+        print("self.influence_radio mean (media estadistica): ", self.influence_radio)
 
         self.__set_code_poles()
         types_code = {}
@@ -120,32 +93,55 @@ class data_business_filter:
 
         return types_code
 
+    #This method obtains the distances between two specified type of microbussines established and found in method "__filter_by_code" by epoch of time.
     def __get_average_distance_for_BussinesCode(self):
         list_distances = []
-        #The one business by step to comparate with all them data
+
+        #información de los negocios filtrados por epoca señalada y codigo de clase de actividad, con su latitud y longitud.
         for _, base in self.filter_bussines.iterrows():
+            #se inicia una lista vacia para almacenar distancias calculadas con respecto a otros negocios
             array = []
 
             #The all business to comparate with the step data
             for _, row in self.filter_bussines.iterrows():
+
+                #Se checa que el negocio  no sea el mismo que el negocio base, viendo las diferencias lat. long. no == cero.
                 if (base['Latitud'] - row['Latitud'])!=0 and (base['Latitud'] - row['Latitud'])!=0:
                     # dlat = base['Latitud'] - row['Latitud']
                     # dlong = base['Longitud'] - row['Longitud']
-                    # array.append(  sqrt( dlat**2 + dlong**2 ) )
+                    # array.append(sqrt( dlat**2 + dlong**2 ))
+
+                    #Si las coordenadas son diferentes, se calcula una "distancia" (no euclidiana)
                     array.append( max(abs(base['Latitud'] - row['Latitud']), abs(base['Longitud'] - row['Longitud'])))
 
+            #la lista se ordena de menor a mayor.
             array.sort()
+            #Se almacena la distancia mínima (es decir, la primera en la lista ordenada)
             list_distances.append(array[0])
 
-        #once we obtained the distances we must save into dataframe
+        # convertimos a metros las distancias para el histograma
+        list_distances_meters = [distance * 1000 for distance in list_distances]
+
+        #Una vez calculadas las distancias mínimas para cada negocio, se crean un DataFrame
         df_distances = pd.DataFrame(list_distances, columns = ['Distances_Totals_Between_BusinessTypeClass'])
+
 
         # ploter histograma of datafram distances
         # plt.hist(list_distances, bins=40)
         # plt.show()
+        ##add this oscar, ploter histograma of datafram distances
+        plt.hist(list_distances_meters, bins=40)
+        plt.xlabel('Distancias minimas')
+        plt.ylabel('Frecuencia')
+        plt.show()
 
 
         return  df_distances
+
+    #We define the set of codes belonging to a type of activity that a microbusiness manages
+    def __set_code_poles(self):
+            # self.code_poles = ( 311520, 311812, 311830, 311910, 312112, 321910, 323119, 332320, 337120, 434112, 434211, 434311, 461110, 461121, 461122, 461130, 461140, 461150, 461160, 461170, 461190, 461213, 462112, 463113, 463211, 463213, 463215, 463310, 464111, 464112, 464113, 465111, 465211, 465311, 465912, 466111, 466212, 466312, 466410, 467111, 467113, 467114, 467115, 468112, 468211, 468420, 531113, 532282, 541110, 541920, 541941, 561432, 611111, 611112, 611621, 621111, 621211, 621398, 621511, 713120, 713943, 722412, 722511, 722512, 722513, 722514, 722515, 722517, 722518, 722519, 811111, 811112, 811119, 811121, 811191, 811192, 811211, 811219, 811410, 811420, 811430, 811492, 811499, 812110, 812130, 812210, 812410, 813210, 813230, 931610)
+            self.code_poles = (461110, 465311, 812110, 463211, 722513, 461122, 461160, 722514, 461130, 311812, 467111, 311830, 722517, 467115, 561432, 722518, 464111, 461121, 811111, 722519, 722515, 621211, 332320, 461190, 465912, 466410, 713120, 531113, 811121, 813210, 468211, 461150, 811191, 463310, 713943, 321910, 465111, 722511, 467114, 466312, 611111, 812210, 621111, 461170, 811192, 811112, 461140, 312112, 465211, 811499, 811430, 466212, 461213, 811410, 464113, 722412, 466111, 434211, 434311, 611112, 434112, 463113, 462112, 464112, 811119, 463215, 811211, 541920, 541110, 323119, 467113, 811492, 337120, 812410, 463213, 813230, 931610, 468112, 811219, 811420, 541941, 311520, 722512, 621398, 311910, 812130, 621511, 532282, 611621, 468420)
 
     def report_accumulated_bussines_support(self):
         Latitud = []
@@ -155,7 +151,7 @@ class data_business_filter:
         averageList = []
         # dfExcel = pd.DataFrame(columns = ['snapTime','nameBussines','311520','311812','311830','311910','312112','321910','323119','332320','337120','434112','434211','434311','461110','461121','461122','461130','461140','461150','461160','461170','461190','461213','462112','463113','463211','463213','463215','463310','464111','464112','464113','465111','465211','465311','465912','466111','466212','466312','466410','467111','467113','467114','467115','468112','468211','468420','531113','532282','541110','541920','541941','561432','611111','611112','611621','621111','621211','621398','621511','713120','713943','722412','722511','722512','722513','722514','722515','722517','722518','722519','811111','811112','811119','811121','811191','811192','811211','811219','811410','811420','811430','811492','811499','812110','812130','812210','812410','813210','813230','931610'], index=range(12))
         dfExcel = pd.DataFrame(columns = ['snapTime','nameBussines', '461110', '465311', '812110', '463211', '722513', '461122', '461160', '722514', '461130', '311812', '467111', '311830', '722517', '467115', '561432', '722518', '464111', '461121', '811111', '722519', '722515', '621211', '332320', '461190', '465912', '466410', '713120', '531113', '811121', '813210', '468211', '461150', '811191', '463310', '713943', '321910', '465111', '722511', '467114', '466312', '611111', '812210', '621111', '461170', '811192', '811112', '461140', '312112', '465211', '811499', '811430', '466212', '461213', '811410', '464113', '722412', '466111', '434211', '434311', '611112', '434112', '463113', '462112', '464112', '811119', '463215', '811211', '541920', '541110', '323119', '467113', '811492', '337120', '812410', '463213', '813230', '931610', '468112', '811219', '811420', '541941', '311520', '722512', '621398', '311910', '812130', '621511', '532282', '611621', '468420' ], index=range(len(self.filter_bussines)))
-        print( "self.influence_radio :::: ",self.influence_radio)
+        print("self.influence_radio :::: ",self.influence_radio)
         for i, base in self.filter_bussines.iterrows():
             types_code = self.bussines_neighborhood_acc.copy()
             for _, iter in self.df_complete.iterrows():
@@ -183,12 +179,39 @@ class data_business_filter:
         averageList.insert(1,"Promedio")
         dfExcel.loc[len(dfExcel)] = averageList
         
-        writer = pd.ExcelWriter('./querys/dataExceLCreated/pruebaUno.xlsx', engine='xlsxwriter')
+        writer = pd.ExcelWriter('../querys/dataExceLCreated/pruebaUno.xlsx', engine='xlsxwriter')
         dfExcel.to_excel(writer, sheet_name='sheet1', index = True)
-        writer.save()
+        writer.close()
         self.plot_escenary(Latitud, Longitud)
         return
 
+    def plot_escenary(self, lat, long):
+        fig, ax = plt.subplots(figsize = (22,12))
+        ax.scatter(self.filter_bussines.Longitud, self.filter_bussines.Latitud, zorder=1, alpha= 0.4, c='r', s=10)
+
+        mymap = plt.imread("../media/map_CDNR.png")
+        BBox = ((-99.3686, -99.2670, 19.58, 19.65))
+
+        x_values = [(BBox[0]+BBox[1])/2, (BBox[0]+BBox[1])/2 + self.influence_radio]
+        y_values = [(BBox[3]+BBox[2])/2, (BBox[3]+BBox[2])/2  ]
+        ax.plot(x_values, y_values, c='b')
+
+        x_values = [(BBox[0]+BBox[1])/2, (BBox[0]+BBox[1])/2 ]
+        y_values = [(BBox[3]+BBox[2])/2, (BBox[3]+BBox[2])/2 + + self.influence_radio_2 ]
+        ax.plot(x_values, y_values, c='r')
+
+
+        ax.scatter(self.filter_bussines.Longitud, self.filter_bussines.Latitud, alpha= 0.4, facecolor='maroon', s=int(self.influence_radio*1450000))
+
+        ax.scatter(long, lat, zorder=1, alpha= 0.4, c='b', s=10)
+
+        ax.set_title('Plotting Spatial Data on Map')
+        ax.set_xlim(BBox[0],BBox[1])
+        ax.set_ylim(BBox[2],BBox[3])
+        ax.imshow(mymap, zorder=0, extent = BBox, aspect = 'equal')
+        plt.show()
+
+#esta funcion no se esta llamanando para este programa.
 def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311812, target_location=[19.599472210151948, -99.30688849000485]):
 
     # Filter data by CODE
@@ -223,6 +246,7 @@ def plot_scatter_bussines_acumulated(df, BBox, mymap, code = 311812, target_loca
 
         plt.savefig('./images_insights/'+str(code)+'.png')
 
+#esta funcion no se esta llamando para este programa.
 def plot_scatter_bussines_by_code(df, BBox, mymap, code_list ):
     color=iter(cm.rainbow(np.linspace(0,1,20)))
     c=next(color)
@@ -255,7 +279,13 @@ def plot_scatter_bussines_by_code(df, BBox, mymap, code_list ):
         plt.clf()
 
 def main():
-    Listcode = [312112, 434211]
+    #Lista de dos microtipos  de actividad
+    #312112 = Purificación y embotellado de agua
+    #434211 = Comercio al por mayor de cemento, tabique y grava
+    #Listcode = [312112, 434211]
+    ##add this oscar
+    #463215 = comercio al por menor de bisuteria y accesorios para vestir.
+    Listcode = [463211]
     Latitud, Longitud = [19.62054709688509, -99.31394730905744]
     time_window = 0
     # ratio = 0.000250
@@ -264,11 +294,16 @@ def main():
     mymap = plt.imread("../media/map_CDNR.png")
     BBox = ((-99.3686, -99.2670, 19.58, 19.65))
 
+    #se inicializa el data class
     bussines_snapshot =  data_business_filter( df, Listcode, time_window)
+
     print( "bussines_snapshot.influence_radio : ", bussines_snapshot.influence_radio)
-    print( "radio KM: ",distance(0,bussines_snapshot.influence_radio ,0,0) )
-    print( "total bussines in radio: ", len(bussines_snapshot.bussines_neighborhood_acc) )
-    print( "0.00099 to KM: ",distance(0,0.00099 ,0,0) )
+
+    print( "radio KM: ",distance(0,bussines_snapshot.influence_radio ,0,0))
+
+    print( "total bussines in radio: ", len(bussines_snapshot.bussines_neighborhood_acc))
+
+    print( "0.00099 to KM: ",distance(0,0.00099 ,0,0))
     #send info to scenary... plot map NR with coordenates
     bussines_snapshot.report_accumulated_bussines_support()
     code_list = [461110, 465311, 311830, 467111, 461122, 311812 ]
@@ -276,7 +311,7 @@ def main():
     # get_averageDistanceClass(df,code,time_window)
     # Firts apply filter class snaptimes on typeClass
     # print("average distance: \n ",get_averageDistanceClass(df,code,time_window))
-    plot_scatter_bussines_by_code(df, BBox, mymap, code_list)
+    # plot_scatter_bussines_by_code(df, BBox, mymap, code_list)
     # get_scaterPlotBusinessClass(df,code,time_window)
     # get_productExcel()
     return
